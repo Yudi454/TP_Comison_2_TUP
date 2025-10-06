@@ -14,14 +14,28 @@ const getAllVentas = (req, res) => {
 const getVentas = (req, res) => {
     const { id } = req.params
 
-    const consulta = `select * from ventas where id_ventas=?`
+    const consulta = `select * from ventas where id_venta=?`
 
-    conection.query(consulta, [id], (error, status) => {
+    conection.query(consulta, [id], (error, result) => {
         if (error) return res.status(500).json({ message: "error al traer la venta" })
 
         return res.status(201).json(result)
     })
 }
+
+const getVentasUsuario = (req, res) => {
+    const { id } = req.params
+
+    const consulta = `select * from ventas where id_usuario=?`
+
+    conection.query(consulta, [id], (error, results) => {
+        if (error) return res.status(500).json({ message: "error al traer la venta" })
+
+        return res.status(201).json(results)
+    })
+}
+
+
 
 const createVentas = (req, res) => {
   const {
@@ -163,3 +177,12 @@ const updateVentaCompleta = (req, res) => {
     });
   });
 };
+
+module.exports={
+    getAllVentas,
+    getVentas,
+    getVentasUsuario,
+    createVentas,
+    updateVentaCompleta,
+    updateVentaEstado
+}

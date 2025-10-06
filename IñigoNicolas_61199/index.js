@@ -8,6 +8,7 @@ const routerUsuario=require("./routes/userRouter")
 const routerProveedores=require("./routes/proveedoresRouter")
 const routerProductos=require("./routes/productosRouter")
 const routerStock=require("./routes/stockRouter")
+const routerVentas=require("./routes/ventasRouter")
 
 const app= express()
 
@@ -21,6 +22,7 @@ app.use("/usuarios",routerUsuario);
 app.use("/proveedores",routerProveedores)
 app.use("/productos",routerProductos)
 app.use("/stock",routerStock)
+app.use("/ventas",routerVentas)
 
 const PORT= process.env.PORT || 8000
 
