@@ -1,4 +1,3 @@
-const { Result } = require("express-validator")
 const conection = require("./../config/db")
 
 const getAllProductos = (req, res) => {

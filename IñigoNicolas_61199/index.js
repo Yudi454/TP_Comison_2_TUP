@@ -7,6 +7,7 @@ const helmet = require("helmet")
 const routerUsuario=require("./routes/userRouter")
 const routerProveedores=require("./routes/proveedoresRouter")
 const routerProductos=require("./routes/productosRouter")
+const routerStock=require("./routes/stockRouter")
 
 const app= express()
 
@@ -19,6 +20,7 @@ app.use(helmet())
 app.use("/usuarios",routerUsuario);
 app.use("/proveedores",routerProveedores)
 app.use("/productos",routerProductos)
+app.use("/stock",routerStock)
 
 const PORT= process.env.PORT || 8000
 
