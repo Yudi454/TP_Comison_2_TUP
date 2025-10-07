@@ -9,6 +9,7 @@ const routerProveedores=require("./routes/proveedoresRouter")
 const routerProductos=require("./routes/productosRouter")
 const routerStock=require("./routes/stockRouter")
 const routerVentas=require("./routes/ventasRouter")
+const routerMetricas=require("./routes/metricasRouter")
 
 const app= express()
 
@@ -23,6 +24,7 @@ app.use("/proveedores",routerProveedores)
 app.use("/productos",routerProductos)
 app.use("/stock",routerStock)
 app.use("/ventas",routerVentas)
+app.use("/metricas",routerMetricas)
 
 const PORT= process.env.PORT || 8000
 

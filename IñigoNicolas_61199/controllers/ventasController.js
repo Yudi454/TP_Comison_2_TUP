@@ -41,7 +41,7 @@ const createVentas = (req, res) => {
   const {
     id_usuario,
     precio_total,
-    productos, // [{ id_producto, cantidad, precio_venta }]
+    productos,
   } = req.body;
 
   const consultaVenta = `INSERT INTO ventas (id_usuario, precio_total) VALUES (?, ?)`;
@@ -49,12 +49,11 @@ const createVentas = (req, res) => {
   conection.query(consultaVenta, [id_usuario, precio_total], (error, result) => {
     if (error) return res.status(500).json({ message: "Error al crear la venta" });
 
-    // ✅ Obtengo el id de la venta creada
     const id_venta = result.insertId;
 
-    const consultaDetalle = `
-      INSERT INTO detalle_ventas (id_venta, id_producto, cantidad, precio_unitario, subtotal)
+    const consultaDetalle = `INSERT INTO detalle_ventas (id_venta, id_producto, cantidad, precio_unitario, subtotal)
       VALUES (?, ?, ?, ?, ?)`;
+      
     const consultaStock = `UPDATE stock SET cantidad = cantidad - ? WHERE id_producto = ?`;
 
     let productosCargados = 0;
@@ -95,7 +94,7 @@ const createVentas = (req, res) => {
 
 const updateVentaEstado = (req, res) => {
   const { id_venta } = req.params;
-  const { estado_venta } = req.body; // 'completada' o 'anulada'
+  const { estado_venta } = req.body; 
 
   const consultaEstado = `UPDATE ventas SET estado_venta = ? WHERE id_venta = ?`;
   const consultaStock = `
@@ -104,7 +103,6 @@ const updateVentaEstado = (req, res) => {
     SET s.cantidad = s.cantidad + dv.cantidad
     WHERE dv.id_venta = ?`;
 
-  // Si se anula, se devuelve el stock
   if (estado_venta === "anulada") {
     conection.query(consultaStock, [id_venta], (error1) => {
       if (error1) return res.status(500).json({ message: "Error al devolver el stock" });
@@ -115,7 +113,7 @@ const updateVentaEstado = (req, res) => {
       });
     });
   } else {
-    // Solo actualizar el estado (por ejemplo volver a completada)
+ 
     conection.query(consultaEstado, [estado_venta, id_venta], (error, result) => {
       if (error) return res.status(500).json({ message: "Error al actualizar el estado" });
       res.status(200).json({ message: "Estado de venta actualizado correctamente" });
@@ -128,16 +126,18 @@ const updateVentaCompleta = (req, res) => {
   const { id_usuario, precio_total, productos } = req.body;
 
   const consultaUpdateVenta = `UPDATE ventas SET id_usuario = ?, precio_total = ? WHERE id_venta = ?`;
+
   const consultaDeleteDetalles = `DELETE FROM detalle_ventas WHERE id_venta = ?`;
-  const consultaInsertDetalle = `
-    INSERT INTO detalle_ventas (id_venta, id_producto, cantidad, precio_unitario, subtotal)
+
+  const consultaInsertDetalle = `INSERT INTO detalle_ventas (id_venta, id_producto, cantidad, precio_unitario, subtotal)
     VALUES (?, ?, ?, ?, ?)`;
+
   const consultaStock = `UPDATE stock SET cantidad = cantidad - ? WHERE id_producto = ?`;
 
   conection.query(consultaUpdateVenta, [id_usuario, precio_total, id_venta], (error, result) => {
     if (error) return res.status(500).json({ message: "Error al actualizar venta" });
 
-    // Primero borramos los detalles anteriores
+
     conection.query(consultaDeleteDetalles, [id_venta], (error2) => {
       if (error2) return res.status(500).json({ message: "Error al eliminar detalles anteriores" });
 
