@@ -78,7 +78,7 @@ const createVenta = (req, res) => {
 
           //Constulta para agregar los detalles de la venta
           const consultaProducto =
-            "INSERT INTO detalle_ventas (id_venta,id_producto,cantidad,subtotal) VALUES (?,?,?,?)";
+            "INSERT INTO detalle_venta (id_venta,id_producto,cantidad,subtotal) VALUES (?,?,?,?)";
 
           const { id_producto, cantidad, precio } = producto;
 
@@ -150,7 +150,7 @@ const updateVenta = (req, res) => {
 
     // Actualizar la venta
     const consultaVenta =
-      "UPDATE ventas SET fecha=?, total=?, id_vendedor=? WHERE id=?";
+      "UPDATE ventas SET fecha=?, total=?, id_vendedor=? WHERE id_venta=?";
 
     conection.query(
       consultaVenta,
@@ -172,7 +172,7 @@ const updateVenta = (req, res) => {
 
           // Actualizar detalle si existe si no actualiza
           const consultaDetalle =
-            "INSERT INTO detalle_ventas (id,id_producto,cantidad,subtotal) VALUES (?,?,?,?) " +
+            "INSERT INTO detalle_venta (id,id_producto,cantidad,subtotal) VALUES (?,?,?,?) " +
             "ON DUPLICATE KEY UPDATE cantidad=?, subtotal=?";
 
           conection.query(
@@ -230,7 +230,7 @@ const deleteVenta = (req, res) => {
 
     // Cambiar estado de los detalles
     const consultaDetalle =
-      "UPDATE detalle_ventas SET estado = 0 WHERE id_venta = ?";
+      "UPDATE detalle_venta SET estado = 0 WHERE id_venta = ?";
 
     conection.query(consultaDetalle, [id_venta], (err, results) => {
       if (err)
@@ -290,7 +290,6 @@ const ventasPorFecha = (req, res) => {
     return res.json(results);
   });
 };
-
 
 module.exports = {
   getAllVentas,

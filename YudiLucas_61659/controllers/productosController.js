@@ -39,7 +39,7 @@ const getOneProducto = (req, res) => {
 const deleteProducto = (req, res) => {
   const { id } = req.params;
 
-  const consulta = "UPDATE productos SET estado = false WHERE id_producto = ?";
+  const consulta = "UPDATE productos SET estado = 0 WHERE id_producto = ?";
 
   conection.query(consulta, [id], (err, results) => {
     if (err) {
@@ -51,7 +51,7 @@ const deleteProducto = (req, res) => {
     }
 
     const actualizarStock =
-      "UPDATE stock SET cantidad = cantidad - 1 WHERE id_producto=?";
+      "UPDATE stock SET estado = 0 WHERE id_producto=?";
 
     conection.query(actualizarStock, [id], (err, results) => {
       if (err) {
@@ -102,7 +102,7 @@ const updateProducto = (req, res) => {
 
           return res
             .status(200)
-            .json({ message: "Producto actualizdo con éxito" });
+            .json({ message: "Producto actualizado con éxito" });
         }
       );
     } else {
@@ -113,10 +113,10 @@ const updateProducto = (req, res) => {
 
 //Crear producto
 const createProducto = (req, res) => {
-  const { id_proveedor, nombre, precio } = req.body;
+  const { id_proveedor, nombre, precio, cantidad } = req.body;
 
   const consultaProveedor =
-    "SELECT id_proveedor FROM proveedoes WHERE id_proveedor=?";
+    "SELECT id_proveedor FROM proveedores WHERE id_proveedor=?";
 
   conection.query(consultaProveedor, [id_proveedor], (err, results) => {
     if (err) {
@@ -136,7 +136,7 @@ const createProducto = (req, res) => {
       (err, results) => {
         if (err) {
           return res
-            .statuts(500)
+            .status(500)
             .json({ message: "Error al crear el producto" });
         }
 
@@ -146,7 +146,7 @@ const createProducto = (req, res) => {
 
         conection.query(
           consultaStock,
-          [idProductoCreado, 1],
+          [idProductoCreado, cantidad || 1],
           (err, results) => {
             if (err) {
               return res

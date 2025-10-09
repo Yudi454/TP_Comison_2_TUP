@@ -26,7 +26,7 @@ const getOneStock = (req, res) => {
     }
 
     if (results.length === 0) {
-      return res.status(404).json({ message: "Usuario no encontrado" });
+      return res.status(404).json({ message: "Stock no encontrado" });
     }
 
     return res.json(results[0]);
@@ -37,7 +37,7 @@ const getOneStock = (req, res) => {
 const deleteStock = (req, res) => {
   const { id } = req.params;
 
-  const consulta = "UPDATE stock SET estadoo = false WHERE id_stock=?";
+  const consulta = "UPDATE stock SET estado = 0 WHERE id_stock=?";
 
   conection.query(consulta, [id], (err, results) => {
     if (err) {

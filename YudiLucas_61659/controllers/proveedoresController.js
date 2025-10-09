@@ -7,7 +7,9 @@ const getAllProveedores = (req, res) => {
   conection.query(consulta, (err, results) => {
     if (err) {
       console.log(err);
-      return res.status(500).json({ message: "Error al obtener los producto" });
+      return res
+        .status(500)
+        .json({ message: "Error al obtener los proveedores" });
     }
 
     return res.json(results);
@@ -22,11 +24,11 @@ const getOneProveedor = (req, res) => {
 
   conection.query(consulta, [id], (err, results) => {
     if (err) {
-      return res.status(500).json({ message: "Error al obtener el producto" });
+      return res.status(500).json({ message: "Error al obtener el proveedor" });
     }
 
     if (results.length === 0) {
-      return res.status(404).json({ message: "Producto no encontrado" });
+      return res.status(404).json({ message: "Proveedor no encontrado" });
     }
 
     return res.json(results[0]);
@@ -37,7 +39,7 @@ const getOneProveedor = (req, res) => {
 const deleteProveedor = (req, res) => {
   const { id } = req.params;
 
-  const consulta = "UPDATE proveedores SET estado = FALSE WHERE id_proveedor=?";
+  const consulta = "UPDATE proveedores SET estado = 0 WHERE id_proveedor=?";
 
   conection.query(consulta, [id], (err, results) => {
     if (err) {
@@ -45,7 +47,7 @@ const deleteProveedor = (req, res) => {
     }
 
     if (results.affectedRows === 0) {
-      return res.status(404).json({ messsage: "Proveedor no encontrado" });
+      return res.status(404).json({ message: "Proveedor no encontrado" });
     }
 
     return res
@@ -75,7 +77,7 @@ const updateProveedor = (req, res) => {
         .json({ message: "No se encontro el proveedor para actualizar" });
     }
 
-    return res.status(200).json({ message: "Proveedor actualizado con exito" });
+    return res.status(200).json({ message: "Proveedor actualizado con éxito" });
   });
 };
 
@@ -99,5 +101,5 @@ module.exports = {
   getOneProveedor,
   deleteProveedor,
   updateProveedor,
-  createProveedor
-}
+  createProveedor,
+};

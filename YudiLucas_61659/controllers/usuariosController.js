@@ -38,7 +38,7 @@ const deleteUsuario = (req, res) => {
   const { id } = req.params;
 
   const consulta =
-    "UPDATE usuarios SET estado = false WHERE id_cliente = ?";
+    "UPDATE usuarios SET estado = false WHERE id_usuario = ?";
 
   conection.query(consulta, [id], (err, results) => {
     if (err) {
@@ -66,14 +66,14 @@ const updateUsuario = (req, res) => {
   conection.query(
     consulta,
     [nombre, contraseña, email, rol, id],
-    (err, resuts) => {
+    (err, results) => {
       if (err) {
         return res
           .status(500)
           .json({ message: "Error al actualizar el usuario" });
       }
 
-      if (resuts.affectedRows === 0) {
+      if (results.affectedRows === 0) {
         return res
           .status(404)
           .json({ message: "No se encontro el usuario para actualizar" });
