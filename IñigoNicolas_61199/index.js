@@ -17,7 +17,7 @@ app.use(express.json())
 app.use(cors())
 app.use(helmet())
 
-//ROUTES
+//ROUTE
 
 app.use("/usuarios",routerUsuario);
 app.use("/proveedores",routerProveedores)
