@@ -30,7 +30,8 @@ const createProducto = (req, res) => {
         nombre_producto,
         descripcion_producto,
         precio_venta,
-        precio_compra
+        precio_compra,
+        cantidad
     } = req.body
 
     const consulta = `insert into productos (
@@ -41,6 +42,8 @@ const createProducto = (req, res) => {
         precio_compra)
         values (?,?,?,?,?)`
 
+    const consultaStock=`insert into stock (id_prodcuto,cantidad) valeus(?,?)`
+
     conection.query(consulta,[id_proveedor,
         nombre_producto,
         descripcion_producto,
@@ -49,7 +52,13 @@ const createProducto = (req, res) => {
         (error,result)=>{
             if(error) return res.status(500).json({message:"error al crear el producto"})
 
-            return res.status(200).json({message:"producto creado con exito"})
+            const idProducto=result.insertId
+
+            conection.query(consultaStock,[idProducto,cantidad],(error2,result2)=>{
+                if(error2) return res.status(500).json({message:"error crear el stock del prodcuto"})
+
+                return res.status(200).json("producto creado exitosamente")
+            })
         }
     )
 }

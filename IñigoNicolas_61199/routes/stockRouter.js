@@ -6,6 +6,6 @@ const { getAllStock, getStock,createStock,updateStock }=require("./../controller
 Router.get("/",getAllStock)
 Router.get("/:id", getStock)
 Router.post("/create", createStock)
-Router.put("/update",updateStock)
+Router.put("/update/:id",updateStock)
 
 module.exports=Router
