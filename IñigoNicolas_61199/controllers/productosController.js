@@ -42,7 +42,7 @@ const createProducto = (req, res) => {
         precio_compra)
         values (?,?,?,?,?)`
 
-    const consultaStock=`insert into stock (id_prodcuto,cantidad) valeus(?,?)`
+    const consultaStock=`insert into stock (id_producto,cantidad) values(?,?)`
 
     conection.query(consulta,[id_proveedor,
         nombre_producto,
@@ -53,6 +53,7 @@ const createProducto = (req, res) => {
             if(error) return res.status(500).json({message:"error al crear el producto"})
 
             const idProducto=result.insertId
+            console.log(idProducto)
 
             conection.query(consultaStock,[idProducto,cantidad],(error2,result2)=>{
                 if(error2) return res.status(500).json({message:"error crear el stock del prodcuto"})
@@ -99,7 +100,7 @@ const updateProducto=(req,res)=>{
 const deleteProducto=(req,res)=>{
     const {id}=req.params
 
-    const consulta= `update producto set estado_producto= falsa where id_producto=?`
+    const consulta= `update productos set estado_producto= false where id_producto=?`
 
     conection.query(consulta,[id],(error,result)=>{
         if(error) return res.status(500).json({message:"error al aliminar el producto"})
