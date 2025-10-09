@@ -1,2 +1,5 @@
+# Para ocultar env
 .env
+
+# Para ocultar nodemodules
 node_modules
