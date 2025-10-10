@@ -13,7 +13,7 @@ app.use(express.json());
 
 app.use('/api/migration/', migrationRoutes);
 app.use('/api/donadores/', donadoresRoutes);
-app.use("/api/productos", productosRoutes);
+app.use("/api/productos/", productosRoutes);
 
 
 app.listen(PORT, () => {

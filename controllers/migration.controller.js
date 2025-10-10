@@ -18,7 +18,7 @@ export const createTables = async (req, res) => {
     const dbName = process.env.MYSQL_DATABASE;
     await poolMigration.query(`USE ${dbName};`);
     await poolMigration.query(`
-      CREATE TABLE donadores (
+      CREATE TABLE IF NOT EXISTS donadores (
         id INT AUTO_INCREMENT PRIMARY KEY,
         nombre VARCHAR(100) NOT NULL,
         apellido VARCHAR(100) NOT NULL,
@@ -31,7 +31,7 @@ export const createTables = async (req, res) => {
         nombre VARCHAR(100) NOT NULL,
         descripcion VARCHAR(255),
         categoria VARCHAR(100),
-        cantidad INT
+        cantidad INT
       );
       
       `);
