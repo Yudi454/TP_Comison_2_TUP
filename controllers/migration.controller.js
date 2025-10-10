@@ -33,6 +33,15 @@ export const createTables = async (req, res) => {
         categoria VARCHAR(100),
         cantidad INT
       );
+
+      CREATE TABLE IF NOT EXISTS comedores (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        nombre VARCHAR(100) NOT NULL,
+        direccion VARCHAR(150),
+        contacto VARCHAR(100),
+        telefono VARCHAR(50),
+        fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      );
       
       `);
     res.json({status: 200, payload: 'Tablas creadas'});
@@ -58,7 +67,7 @@ export const createData = async (req, res) => {
         ('Miguel', 'Díaz', '3815567890'),
         ('Elena', 'Torres', '1156789012');
 
-        
+
       INSERT INTO productos (nombre, descripcion, categoria, cantidad) VALUES
         ('Arroz', 'Arroz blanco de alta calidad', 'Alimento perecedero', 100),
         ('Leche', 'Leche entera', 'Alimento perecedero', 50),
@@ -80,6 +89,12 @@ export const createData = async (req, res) => {
         ('Queso', 'Queso cremoso', 'Alimento perecedero', 40),
         ('Café', 'Café molido', 'Alimento no perecedero', 70),
         ('Arroz integral', 'Arroz integral de grano largo', 'Alimento no perecedero', 55);
+
+
+      INSERT INTO comedores (nombre, direccion, contacto, telefono) VALUES
+        ('Comedor Esperanza', 'Calle Falsa 123', 'María López', '1122334455'),
+        ('Manos Unidas', 'Av. Central 456', 'Juan Pérez', '1199887766'),
+        ('Corazón Solidario', 'Calle Real 789', 'Ana Gómez', '1133557799');
       `);
     
     res.json({status: 200, payload: 'Datos insertados'});

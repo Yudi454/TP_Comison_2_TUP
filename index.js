@@ -1,7 +1,5 @@
 import express from 'express';
 import comedoresRoutes from './routes/comedores.route.js';
-
-
 import migrationRoutes from './routes/migration.route.js';
 import donadoresRoutes from './routes/donadores.route.js';
 import productosRoutes from './routes/productos.route.js';

@@ -72,4 +72,29 @@ export const createNewComedor = async (req, res) => {
   }
 };
 
+export const modificateComedor = async (req, res) => {
+  const { id } = req.params;
+  const { nombre, direccion, contacto, telefono } = req.body;
+
+  const query = `
+    UPDATE comedores
+    SET nombre = ?, direccion = ?, contacto = ?, telefono = ?
+    WHERE id = ?
+  `;
+
+  try {
+    const [result] = await db.query(query, [nombre, direccion, contacto, telefono, id]);
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: "Comedor no encontrado" });
+    }
+
+    res.status(200).json({
+      message: "Comedor modificado correctamente",
+    });
+  } catch (err) {
+    console.error("Error al modificar el comedor", err);
+    res.status(500).json({ error: "Error al modificar el comedor"});
+  }
+};
 
