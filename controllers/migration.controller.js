@@ -24,7 +24,17 @@ export const createTables = async (req, res) => {
         apellido VARCHAR(100) NOT NULL,
         contacto VARCHAR(100) NOT NULL,
         deleted_at TIMESTAMP NULL DEFAULT NULL
-      );`);
+      );
+
+      CREATE TABLE IF NOT EXISTS productos(
+        id_producto INT PRIMARY KEY AUTO_INCREMENT,
+        nombre VARCHAR(100) NOT NULL,
+        descripcion VARCHAR(255),
+        categoria VARCHAR(100),
+        cantidad INT
+      );
+      
+      `);
     res.json({status: 200, payload: 'Tablas creadas'});
   } catch (error) {
     console.log(error);
@@ -47,6 +57,29 @@ export const createData = async (req, res) => {
         ('Sofía', 'Fernández', '1145678901'),
         ('Miguel', 'Díaz', '3815567890'),
         ('Elena', 'Torres', '1156789012');
+
+        
+      INSERT INTO productos (nombre, descripcion, categoria, cantidad) VALUES
+        ('Arroz', 'Arroz blanco de alta calidad', 'Alimento perecedero', 100),
+        ('Leche', 'Leche entera', 'Alimento perecedero', 50),
+        ('Pollo', 'Pollo fresco', 'Alimento perecedero', 30),
+        ('Pescado', 'Pescado fresco', 'Alimento perecedero', 20),
+        ('Huevos', 'Huevos de gallina', 'Alimento perecedero', 40),
+        ('Cereal', 'Cereal de trigo', 'Alimento perecedero', 60),
+        ('Aceite', 'Aceite de oliva', 'Alimento perecedero', 25),
+        ('Yogur', 'Yogur natural', 'Alimento perecedero', 35),
+        ('Frutas', 'Frutas frescas', 'Alimento perecedero', 70),
+        ('Verduras', 'Verduras frescas', 'Alimento perecedero', 45),
+        ('Azúcar', 'Azúcar refinada', 'Alimento no perecedero', 80),
+        ('Arvejas en lata', 'Arvejas en conserva', 'Alimento no perecedero', 50),
+        ('Pan', 'Pan fresco de trigo', 'Alimento perecedero', 30),
+        ('Sal', 'Sal fina de mesa', 'Alimento no perecedero', 90),
+        ('Galletitas', 'Galletitas dulces surtidas', 'Alimento no perecedero', 60),
+        ('Manteca', 'Manteca natural', 'Alimento perecedero', 25),
+        ('Harina', 'Harina de trigo 000', 'Alimento no perecedero', 100),
+        ('Queso', 'Queso cremoso', 'Alimento perecedero', 40),
+        ('Café', 'Café molido', 'Alimento no perecedero', 70),
+        ('Arroz integral', 'Arroz integral de grano largo', 'Alimento no perecedero', 55);
       `);
     
     res.json({status: 200, payload: 'Datos insertados'});
