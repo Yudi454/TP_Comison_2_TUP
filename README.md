@@ -1,260 +1,236 @@
-📘 Trabajos Prácticos – Programación Back-End con Node.js y MySQL
+📘 Guía Oficial – Entrega de TP Semanal (Programación 4 – UTN FRT)
+💻 Trabajo colaborativo en GitHub con repositorio por grupo
+🧭 Estructura del Repositorio
 
-Bienvenidos al repositorio de Trabajos Prácticos de Programación.
-Cada alumno deberá trabajar de forma individual siguiendo las reglas de este repositorio.
+El repositorio base del profesor contiene una carpeta raíz llamada:
 
-🚀 Instrucciones Generales
-1. Hacer Fork
-
-Entrar a este repositorio en GitHub.
-
-Presionar el botón Fork (arriba a la derecha).
-
-Ahora tendrás una copia del repo en tu cuenta de GitHub.
-
-2. Clonar tu Fork
-
-En tu computadora, clonar tu fork:
-
-git clone https://github.com/TU-USUARIO/trabajos-practicos.git
-cd trabajos-practicos
-
-3. Crear Carpeta Personal
-
-Cada alumno debe crear una carpeta con el siguiente formato:
-
-ApellidoNombre_Legajo/
+📂 Trabajos_Grupales/
 
 
-📌 Ejemplo:
+Dentro de ella, cada grupo tiene su propia carpeta asignada:
 
-PerezJuan_12345/
+Trabajos_Grupales/
+├─ Grupo_1/
+├─ Grupo_2/
+├─ Grupo_3/
+├─ Grupo_4/
+└─ Grupo_5/
+.
+.
+.
+.├─ Grupo_N/
+
+📌 Cada grupo deberá trabajar únicamente dentro de su carpeta.
+El resto de las carpetas no deben ser modificadas.
+
+🎯 Objetivo General
+
+El objetivo es evaluar:
+
+✅ Trabajo en equipo.
+✅ Organización del código por grupo.
+✅ Participación individual mediante ramas y commits.
+✅ Conocimiento técnico (Node + MySQL + Express).
+
+🚀 Pasos para la entrega
+1️⃣ Fork del repositorio base
+
+Cada grupo debe hacer un Fork del repositorio del profesor:
+
+👉 https://github.com/ChocobarMatias/TP_Comision_2_TUP
+
+Solo un integrante del grupo (el líder) realiza el fork inicial.
+Los demás integrantes trabajarán como colaboradores dentro de ese fork.
+
+📘 Agregar Colaboradores al Fork (Importante)
+
+El líder del grupo debe agregar a todos los integrantes como colaboradores para que puedan clonar, crear ramas y subir sus cambios.
+
+🔹 Pasos:
+
+Ingresar al fork del grupo.
+
+Ir a Settings → Collaborators → Add people.
+
+Escribir el usuario de GitHub de cada integrante y presionar Add collaborator.
+
+Cada integrante recibirá una invitación que debe aceptar.
+
+💡 Una vez aceptada la invitación, todos los integrantes tendrán permisos de escritura sobre el mismo repositorio del grupo.
+
+2️⃣ Clonar el fork del grupo
+
+Cada integrante debe clonar el repositorio del líder de su grupo, no el del profesor:
+
+git clone https://github.com/<usuario_del_lider>/TP_Comision_2_TUP.git
+cd TP_Comision_2_TUP
+
+3️⃣ Ubicación del trabajo del grupo
+
+Dentro de la carpeta 📂 Trabajos_Grupales, el grupo debe trabajar solo dentro de su carpeta asignada.
+Por ejemplo:
+
+📂 Trabajos_Grupales/
+└─ 📂 Grupo_1/
+     ├─ index.js
+     ├─ config/
+     │   └─ DB.js
+     ├─ controllers/
+     ├─ routes/
+     └─ package.json
 
 
-Dentro de esa carpeta vas a trabajar tu back-end y base de datos para cada TP.
+💡 Todo el desarrollo del sistema (backend monolítico) se debe realizar dentro de la carpeta correspondiente al grupo asignado.
 
-4. Crear tu Rama
+4️⃣ Creación de ramas personales (por integrante)
 
-Para cada trabajo práctico, deberás crear una rama con este formato:
+Cada integrante del grupo debe crear su propia rama dentro del fork con su nombre o legajo.
+Ejemplo:
 
-ApellidoNombre_Legajo_TP#
-
-
-📌 Ejemplo:
-
-PerezJuan_12345_TP1
-
-
-Crear la rama:
-
-git checkout -b ApellidoNombre_Legajo_TP1
-
-5. Subir tus Cambios
-
-Cada vez que termines un TP:
-
+git checkout -b cardozo_martin
 git add .
-git commit -m "Entrega TP1 - Perez Juan - Legajo 12345"
-git push origin ApellidoNombre_Legajo_TP1
+git commit -m "Agrego controlador de productos - Martin"
+git push origin cardozo_martin
 
-6. Enviar Pull Request (PR)
 
-Ir a tu fork en GitHub.
+📘 Regla:
+Cada alumno trabaja en su rama y luego se integran todos en la rama grupal (por ejemplo grupo1).
 
-Presionar Contribute → Open Pull Request.
+5️⃣ Integración del trabajo grupal
 
-Elegir que los cambios vayan al repo del profesor.
+El líder del grupo será responsable de integrar las ramas individuales dentro de la carpeta del grupo.
 
-El título debe ser:
+Ejemplo:
 
-Entrega TP1 - Apellido Nombre - Legajo
+git checkout grupo1
+git merge cardozo_martin
+git merge bazan_matias
+git merge herrera_karen
 
+6️⃣ Pull Request (PR) de entrega
 
-Enviar el PR.
+Una vez terminado el trabajo, el líder del grupo debe realizar un Pull Request (PR) desde su fork hacia el repositorio del profesor.
 
-7. Actualizar tu Fork (cuando se publiquen nuevos TPs)
+🔹 Instrucciones:
 
-Si el profesor sube nuevos trabajos al repo original, sincronizá tu fork:
+Base repository: ChocobarMatias/TP_Comision_2_TUP
 
-git fetch upstream
-git checkout main
-git merge upstream/main
-git push origin main
+Base branch: main
 
+Head repository: <usuario_del_grupo>/TP_Comision_2_TUP
 
-(Si aún no configuraste el remoto upstream, hacelo una sola vez con:)
+Compare branch: grupo1 (o la rama principal del grupo)
 
-git remote add upstream https://github.com/PROFE-USER/trabajos-practicos.git
+🔹 Título del PR:
+Entrega TP1 - Grupo 1 - Legajo líder 61658
 
-✅ Resumen del Flujo de Trabajo
+🔹 Descripción del PR:
+Integrantes:
+- Cardozo Martín (61658)
+- Bazan Matías (61152)
+- Herrera Karen (61151)
+- Navarro Lautaro (61160)
 
-Fork del repo.
+🧮 Forma de Evaluación
+Criterio	Descripción	Resultado
+✅ Carpeta del grupo creada correctamente	El grupo trabajó dentro de su carpeta asignada	AP
+✅ Ramas personales creadas	Cada integrante subió su rama con commits propios	AP
+✅ PR grupal realizado	Se envió un Pull Request al repo del profesor	AP
+⚠️ Faltan ramas personales	Algún integrante no participó	OB
+❌ Sin PR o sin carpeta del grupo	No se considera entrega	DS
+🧩 Ejemplo visual
+TP_Comision_2_TUP/
+└─ 📂 Trabajos_Grupales/
+   ├─ 📂 Grupo_1/
+   │   ├─ index.js
+   │   ├─ config/DB.js
+   │   ├─ controllers/
+   │   └─ routes/
+   ├─ 📂 Grupo_2/
+   ├─ 📂 Grupo_3/
+   └─ 📂 Grupo_4/
 
-Clonar tu fork.
 
-Crear carpeta personal (ApellidoNombre_Legajo).
+Cada grupo trabaja solo en su carpeta y cada alumno en su rama.
 
-Crear rama (ApellidoNombre_Legajo_TP#).
+🧠 Evaluación Automática
 
-Resolver TP dentro de tu carpeta.
+El sistema del profesor (GitHub Actions) se ejecutará automáticamente al llegar la fecha límite:
 
-Commit & Push a tu rama.
+🕒 15 de octubre de 2025 a las 23:59 (hora Argentina)
 
-Pull Request al repo del profesor.
+Se validará:
 
-👉 Siguiendo estas reglas, cada alumno tendrá su espacio identificado y las entregas quedarán ordenadas en ramas y PRs.
+Que exista la carpeta del grupo.
 
-¿Querés que además te arme un ejemplo visual en el README (tipo árbol de carpetas y ramas de ejemplo) para que les quede todavía más claro?
+Que haya un Pull Request del grupo.
 
-Dijiste:
-si porfavor 
-ChatGPT dijo:
+Que existan ramas individuales de cada integrante.
 
-¡Excelente! 🙌 Te dejo el README final mejorado, con un ejemplo visual de cómo deben quedar las carpetas y las ramas. Esto ayuda a que los alumnos lo vean más claro y no haya confusiones.
+Que el sistema compile y cumpla la estructura mínima.
 
-📘 Trabajos Prácticos – Programación Back-End con Node.js y MySQL
+Los resultados aparecerán automáticamente en el README del repo base, por ejemplo:
 
-Bienvenidos al repositorio de Trabajos Prácticos de Programación.
-Cada alumno deberá trabajar de forma individual siguiendo las reglas de este repositorio.
+Grupo	Integrantes	Estado	Observaciones
+Grupo 1	4	AP	Cumple estructura
+Grupo 2	3	OB	Falta rama de un integrante
+Grupo 3	4	DS	No presentó PR
+📘 Resumen para los alumnos
+Acción requerida	Responsable	Evaluación
+Hacer fork del repo base	Líder del grupo	Obligatorio
+Agregar colaboradores	Líder del grupo	Obligatorio
+Crear ramas individuales	Cada integrante	AP
+Trabajar dentro de su carpeta del grupo	Todos los integrantes	AP
+Crear PR grupal	Líder	AP
+No tener rama personal	Alumno	DS (No entregó)
+No tener carpeta de grupo o PR	Grupo	DS (No entregó)
+💬 Consejos finales
 
-🚀 Instrucciones Generales
-1. Hacer Fork
+Cada commit debe tener mensaje claro y legible.
 
-Entrar a este repositorio en GitHub.
+Usar nombres de ramas sin espacios (nombre_apellido).
 
-Presionar el botón Fork (arriba a la derecha).
+Evitar subir node_modules (usar .gitignore).
 
-Ahora tendrás una copia del repo en tu cuenta de GitHub.
+Verificar que el proyecto compile antes del PR.
 
-2. Clonar tu Fork
+Respetar la estructura de carpetas asignada.
 
-En tu computadora, clonar tu fork:
+Aceptar las invitaciones de colaborador antes de comenzar a trabajar.
 
-git clone https://github.com/TU-USUARIO/trabajos-practicos.git
-cd trabajos-practicos
 
-3. Crear Carpeta Personal
+GRUPOS	      Semana 1
 
-Cada alumno debe crear una carpeta con el siguiente formato:
+Grupo N° 1 -	TP 6
+   
+Grupo N° 2 -	TP 7
 
-ApellidoNombre_Legajo/
+Grupo N° 3 -	TP 8
 
+Grupo N° 4 -	TP 9
 
-📌 Ejemplo:
+Grupo N° 5 -	TP 10
 
-PerezJuan_12345/
+Grupo N° 6 -	TP 1
 
+Grupo N° 7 -	TP 2
 
-Dentro de esa carpeta vas a trabajar tu back-end y base de datos para cada TP.
+Grupo N° 8 -	TP 3
 
-4. Crear tu Rama
+Grupo N° 9 -	TP 4
 
-Para cada trabajo práctico, deberás crear una rama con este formato:
+Grupo N° 10 -	TP 5
 
-ApellidoNombre_Legajo_TP#
+Grupo N° 11 -	TP 6
 
+Grupo N° 12 -	TP 9
 
-📌 Ejemplo:
+Grupo N° 13 -	TP 8
 
-PerezJuan_12345_TP1
+Grupo N° 14 -	TP 5
 
+Grupo N° 15 -	TP 7
 
-Crear la rama:
+Grupo N° 16 -	TP 2
 
-git checkout -b ApellidoNombre_Legajo_TP1
-
-5. Subir tus Cambios
-
-Cada vez que termines un TP:
-
-git add .
-git commit -m "Entrega TP1 - Perez Juan - Legajo 12345"
-git push origin ApellidoNombre_Legajo_TP1
-
-6. Enviar Pull Request (PR)
-
-Ir a tu fork en GitHub.
-
-Presionar Contribute → Open Pull Request.
-
-Elegir que los cambios vayan al repo del profesor.
-
-El título debe ser:
-
-Entrega TP1 - Apellido Nombre - Legajo
-
-
-Enviar el PR.
-
-7. Actualizar tu Fork (cuando se publiquen nuevos TPs)
-
-Si el profesor sube nuevos trabajos al repo original, sincronizá tu fork:
-
-git fetch upstream
-git checkout main
-git merge upstream/main
-git push origin main
-
-
-(Si aún no configuraste el remoto upstream, hacelo una sola vez con:)
-
-git remote add upstream https://github.com/PROFE-USER/trabajos-practicos.git
-
-📂 Ejemplo Visual
-🔹 Estructura de carpetas esperada
-trabajos-practicos/
-│   README.md
-│   package.json
-│   .gitignore
-│   .env.example
-│   index.js
-│
-├── config/
-│   DB.js
-│
-├── controllers/
-│   userController.js
-│
-├── routes/
-│   userRoutes.js
-│
-├── utils/
-│   errorHandler.js
-│
-├── PerezJuan_12345/
-│   ├── index.js
-│   ├── config/
-│   ├── controllers/
-│   ├── routes/
-│   └── scripts.sql
-│
-└── RodriguezMaria_67890/
-    ├── index.js
-    ├── config/
-    ├── controllers/
-    ├── routes/
-    └── scripts.sql
-
-🔹 Ejemplo de ramas esperadas
-main                        -> Rama principal del profesor
-PerezJuan_12345_TP1         -> Rama del alumno Juan Pérez para TP1
-PerezJuan_12345_TP2         -> Rama del alumno Juan Pérez para TP2
-RodriguezMaria_67890_TP1    -> Rama de la alumna María Rodríguez para TP1
-
-✅ Resumen del Flujo de Trabajo
-
-Fork del repo.
-
-Clonar tu fork.
-
-Crear carpeta personal (ApellidoNombre_Legajo).
-
-Crear rama (ApellidoNombre_Legajo_TP#).
-
-Resolver TP dentro de tu carpeta.
-
-Commit & Push a tu rama.
-
-Pull Request al repo del profesor.
-
-👉 Siguiendo estas reglas, cada alumno tendrá su espacio identificado y las entregas quedarán ordenadas en ramas y PRs.
+Grupo N° 17 -	TP 1
