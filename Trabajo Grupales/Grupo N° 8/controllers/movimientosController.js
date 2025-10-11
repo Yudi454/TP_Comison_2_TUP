@@ -176,3 +176,10 @@ const getMovimientoPorProducto = (req, res) => {
     return res.status(200).json(results);
   });
 };
+
+module.exports = {
+  entradaStock,
+  salidaStock,
+  getAllMovimientos,
+  getMovimientoPorProducto
+}

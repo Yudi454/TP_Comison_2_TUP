@@ -51,3 +51,9 @@ const getStockMinimo = (req, res) => {
     return res.status(200).json(results);
   });
 };
+
+module.exports = {
+  getAllStock,
+  getOneStock,
+  getStockMinimo
+}
