@@ -1,34 +1,46 @@
 const express = require('express');
-const dotenv = require('dotenv').config();
 const cors = require('cors');
-const {connection} = require('./config/bd')
+const dotenv = require('dotenv').config();
+const {connection} = require('./config/bd');
 
-
-// INICIALIZAR EXPRESS 
 const app = express();
+
 app.use(cors());
 app.use(express.json());
 
+//ROUTES RUTAS
 
-
-//RUTAS / ROUTES
-
-
-
-
-
-
-//RUTA PRICIPAL
+app.use('/api/eventos', require('./routes/eventos.routes'));
 
 
 
 
 
 
-// INCIAR SERVIDOR 
+//RUTA PRINNCIPAL 
 
-const PORT= process.env.PORT || 3000;
-app.listen(PORT, ()=>{
-    console.log(`el servidor esta inciiado en el puerto ${PORT}`)
+
+app.get('/', (req, res) => {
+  res.json({ 
+    message: 'Bienvenido al Sistema de Gestión Comercial',
+    version: '1.0.0',
+    endpoints: {
+      eventos: '/api/eventos',
+
+    }
+  });
 });
+
+
+
+
+//INICIAR SERVIDOR 
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+console.log(`el servidor esta inciiado en el puerto ${PORT}`)
+});
+
+
+
 
