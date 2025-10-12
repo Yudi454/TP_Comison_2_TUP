@@ -11,6 +11,7 @@ app.use(express.json());
 // RUTAS
 app.use('/api/eventos', require('./routes/eventos.routes'));
 app.use('/api/artistas-eventos', require('./routes/artistas_eventos.routes'));
+app.use('/api/ventas-boletos', require('./routes/ventas_boletos.routes'));
 
 // RUTA PRINCIPAL
 app.get('/', (req, res) => {
