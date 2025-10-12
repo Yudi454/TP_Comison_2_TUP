@@ -16,9 +16,9 @@ const  mostrarReservas = (req, res) => {
 const crearReserva = (req, res) => {
     const { idSocio, idActividad, fecha,hora } = req.body;
 
-    // Consultar cupo y hora de la actividad
-    const consultaCupoHora = "SELECT cupoMaximo FROM actividades WHERE idActividad = ?";
-    connection.query(consultaCupoHora, [idActividad], (error, results) => {
+    // Consultar cupo de la actividad
+    const consultaCupo = "SELECT cupoMaximo FROM actividades WHERE idActividad = ?";
+    connection.query(consultaCupo, [idActividad], (error, results) => {
         if (error) {
             console.error("Error al consultar la actividad:", error);
             return res.status(500).json({ error: "Error al consultar la actividad" });
