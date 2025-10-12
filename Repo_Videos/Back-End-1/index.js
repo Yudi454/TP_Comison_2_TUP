@@ -2,6 +2,9 @@ const express = require("express")
 const {connection} = require('./config/config');
 const dotenv = require('dotenv');
 const usuarioRoutes = require('./routes/usuarios.routes');
+const clienteRoutes = require('./routes/clientes.routes');
+const productoRoutes = require('./routes/productos.routes');
+const ventaRoutes = require('./routes/ventas.routes');
 
 dotenv.config();// traigo las variables de entorno desde el archivo .env
 
