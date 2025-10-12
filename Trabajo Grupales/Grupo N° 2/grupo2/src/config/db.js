@@ -7,7 +7,7 @@ dotenv.config();
 
 //Creamos la conexion a la DB
 
-const conexion = mysql.createPool({  // createPool permite manejar multiples conexiones a la DB
+const conexion = mysql.createConnection({  // createPool permite manejar multiples conexiones a la DB
     host : process.env.DB_HOST,
     user : process.env.DB_USER,
     password : process.env.DB_PASSWORD,
