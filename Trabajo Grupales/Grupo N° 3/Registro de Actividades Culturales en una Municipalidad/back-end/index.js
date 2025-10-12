@@ -10,6 +10,7 @@ app.use(express.json());
 
 //ROUTES RUTAS
 
+app.use('/api/eventos', require('./routes/eventos.routes'));
 
 
 
@@ -19,7 +20,16 @@ app.use(express.json());
 //RUTA PRINNCIPAL 
 
 
+app.get('/', (req, res) => {
+  res.json({ 
+    message: 'Bienvenido al Sistema de Gestión Comercial',
+    version: '1.0.0',
+    endpoints: {
+      eventos: '/api/eventos',
 
+    }
+  });
+});
 
 
 
