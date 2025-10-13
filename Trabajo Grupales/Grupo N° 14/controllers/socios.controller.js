@@ -1,6 +1,6 @@
 const  connection  = require("../config/config")
 
-const getAllSocios = (req, res) => {
+const mostrarSocios = (req, res) => {
 
     const consulta = "select * from socios";
 
@@ -57,5 +57,5 @@ const eliminarSocio = (req, res) => {
     });
 }
 
-module.exports = { getAllSocios, crearSocio, modificarSocio,eliminarSocio};
+module.exports = { mostrarSocios, crearSocio, modificarSocio, eliminarSocio };
 
