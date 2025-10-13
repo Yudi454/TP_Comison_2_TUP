@@ -1,28 +1,28 @@
-require("dotenv").config();
+require("dotenv").config()
+const express= require("express")
+const cors= require("cors")
+const conection= require("./config/database")
+const helmet = require("helmet")
 
-const express = require("express");
-const conection = require("./config/database");
+const RoutesProveedores=require("./routes/proveedoresRouter")
 
-const rutasMovimientos = require("./routes/rutasMovimientos");
-const rutasStock = require("./routes/rutasStock");
-const routersProductos = require("./routes/productos")
+const app= express()
 
-const app = express();
+app.use(express.json())
+app.use(cors())
+app.use(helmet())
 
-app.use(express.json());
+//Routes
+app.use("/proveedores",RoutesProveedores)
 
-app.use("/movimientos", rutasMovimientos);
-app.use("/stock", rutasStock);
-app.use("/productos", routersProductos)
+const PORT= process.env.PORT || 8000
 
-conection.connect((err) => {
-  if (err) throw err;
-  console.log("Conectado a la base de datos");
-});
+conection.connect((error)=>{
+    if (error) throw error
+    console.log("conectado a las base de datos")
+})
 
-const PORT = process.env.PORT;
-
-app.listen(PORT, (err) => {
-  if (err) throw err;
-  console.log("Conectado al puerto " + PORT);
-});
+app.listen(PORT, (error)=>{
+    if(error) throw error
+    console.log(`conectado a puerto ${PORT}`)
+})
