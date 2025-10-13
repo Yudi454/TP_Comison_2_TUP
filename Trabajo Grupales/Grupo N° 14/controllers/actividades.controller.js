@@ -27,4 +27,40 @@ const crearActividad = (req, res) => {
     });
 };
 
-module.exports = { mostrarActividades, crearActividad };
+
+const editarActividad = (req, res) => {
+   const {id} = req.params;
+   const { nombre, descripcion, cupoMaximo } = req.body;
+   
+   const consulta = "UPDATE actividades SET nombre = ?, descripcion = ?, cupoMaximo = ? WHERE idActividad = ?"
+   connection.query(consulta, [nombre,descripcion,cupoMaximo,id], (error, results) => {
+    if (error) {
+            console.error("Error al editar la actividad:", error);
+            res.status(500).json({ error: "Error al editar la actividad" });
+        } else {
+            res.status(201).json({ message: "Actividad fue editada exitosamente"});
+        }
+   })
+}
+
+const eliminarActividad = (req, res) => {
+    const {id} = req.params;
+const consulta1 = "DELETE From reservas WHERE idActividad = ?"
+connection.query(consulta1, [id], (error, results) => {
+    if (error) {
+            console.error("Error al eliminar la actividad en la recerva:", error);
+            res.status(500).json({ error: "Error al eliminar la actividad en la recerva" });
+        } 
+})
+    const consulta2 = "DELETE From actividades WHERE idActividad = ?"
+    connection.query(consulta2, [id], (error, results) => {
+    if (error) {
+            console.error("Error al eliminar la actividad:", error);
+            res.status(500).json({ error: "Error al eliminar la actividad" });
+        } else {
+            res.status(201).json({ message: "Actividad fue eliminada exitosamente"});
+        }
+})
+}
+
+module.exports = { mostrarActividades, crearActividad, editarActividad, eliminarActividad};
