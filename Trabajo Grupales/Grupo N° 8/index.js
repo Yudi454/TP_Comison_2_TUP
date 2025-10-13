@@ -5,6 +5,7 @@ const conection = require("./config/database");
 
 const rutasMovimientos = require("./routes/rutasMovimientos");
 const rutasStock = require("./routes/rutasStock");
+const routersProductos = require("./routes/productos")
 
 const app = express();
 
@@ -12,6 +13,7 @@ app.use(express.json());
 
 app.use("/movimientos", rutasMovimientos);
 app.use("/stock", rutasStock);
+app.use("/productos", routersProductos)
 
 conection.connect((err) => {
   if (err) throw err;
