@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import db from "./config/db.js";
 
 // Importamos las rutas creadas
-
+import turnoRoutes from "./routes/turnos.routes.js";
 //Inicializamos dotenv para llamar las variables de entorno
 
 dotenv.config();
@@ -19,11 +19,17 @@ db.connect((error) => {
 });
 const app = express();
 
+//Middlewares
+app.use(express.json());
+
 //Configuracion del puerto
 
 const PORT = process.env.PORT || 3000;
 
 //Rutas
+
+//Turnos
+app.use("/api/turnos/v1", turnoRoutes);
 
 //Inicializamos el servidor
 
