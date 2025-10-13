@@ -1,0 +1,29 @@
+{
+  "name": "tp_comison_2_tup",
+  "version": "1.0.0",
+  "description": "📘 Trabajos Prácticos – Programación Back-End con Node.js y MySQL",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CardozoMartin/TP_Comison_2_TUP.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CardozoMartin/TP_Comison_2_TUP/issues"
+  },
+  "homepage": "https://github.com/CardozoMartin/TP_Comison_2_TUP#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "helmet": "^8.1.0",
+    "mysql2": "^3.15.2",
+    "nodemon": "^3.1.10"
+  }
+}
