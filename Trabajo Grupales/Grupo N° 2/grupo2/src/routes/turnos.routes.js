@@ -9,7 +9,7 @@ const router = Router();
 //POST - Solicitar turno
 router.post("/solicitarTurno", solicitarTurno);
 
-// GET - listar turnos por fecha
+// GET - listar turnos por fecha 
 
 router.get("/ListarTurnos/:fecha", traerTurnosPorFecha);
 

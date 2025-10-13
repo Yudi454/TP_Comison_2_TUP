@@ -86,6 +86,7 @@ export const traerTurnosPorFecha = (req, res) => {
       return res.status(400).json({ message: "La fecha es obligatoria" });
     }
     
+    // Consulta para traer los turnos de la fecha especificada
     const traerTurnos = "SELECT * FROM turnos WHERE FechaRequeridaTurno = ?";
     db.query(traerTurnos, [fechaSolicitudTurno], (error, results) => {
       if (error) {
