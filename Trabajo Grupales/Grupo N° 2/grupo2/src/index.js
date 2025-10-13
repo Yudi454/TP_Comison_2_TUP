@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import db from "./config/db.js";
+import observacionesRoutes from "./routes/observaciones.routes.js";
 
 // Importamos las rutas creadas
 
@@ -24,6 +25,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 //Rutas
+
 
 //Inicializamos el servidor
 
