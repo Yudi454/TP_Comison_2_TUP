@@ -15,7 +15,7 @@ app.use(cors());
 app.use(express.json());
 app.use(morgan('dev'));
 
-// app.use('/api/socios', sociosRoutes);
+app.use('/api/socios', sociosRoutes);
 // app.use('/api/deportes', deportesRoutes);
 // app.use('/api/asignaciones', asignacionesRoutes);
 // app.use('/api/pagos', pagosRoutes);

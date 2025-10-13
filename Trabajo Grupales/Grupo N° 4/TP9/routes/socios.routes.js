@@ -1,8 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const ctrl = require('../controllers/socios.controller');
+const sociosController = require('../controllers/socios.controller');
 
-router.get('/', ctrl.getAll);
-router.post('/', ctrl.create);
+// Rutas CRUD
+router.get('/', sociosController.getAll);
+router.get('/:id', sociosController.getById);
+router.post('/', sociosController.create);
+router.put('/:id', sociosController.update);
+router.delete('/:id', sociosController.remove);
 
 module.exports = router;
