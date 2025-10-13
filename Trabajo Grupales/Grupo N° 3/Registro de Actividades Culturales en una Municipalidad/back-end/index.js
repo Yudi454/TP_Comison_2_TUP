@@ -1,6 +1,7 @@
+const dotenv = require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const dotenv = require('dotenv').config();
+
 
 
 const app = express();
@@ -12,6 +13,7 @@ app.use(express.json());
 app.use('/api/eventos', require('./routes/eventos.routes'));
 app.use('/api/artistas-eventos', require('./routes/artistas_eventos.routes'));
 app.use('/api/ventas-boletos', require('./routes/ventas_boletos.routes'));
+app.use('/api/artistas', require('./routes/artistas.routes'));
 
 // RUTA PRINCIPAL
 app.get('/', (req, res) => {
