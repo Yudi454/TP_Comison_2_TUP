@@ -6,27 +6,25 @@ export const solicitarTurno = (req, res) => {
       idPaciente,
       idMedico,
       FechaRequeridaTurno,
-      HoraRequeridaTurno,
-      EstadoTurno,
+      HorarioRequeridoTurno,
     } = req.body;
 
     if (
       !idPaciente ||
       !idMedico ||
       !FechaRequeridaTurno ||
-      !HoraRequeridaTurno ||
-      !EstadoTurno
+      !HorarioRequeridoTurno
     ) {
       return res.status(400).json({ message: "Faltan datos obligatorios" });
     }
 
     // Verificar si ya existe un turno para el mismo médico en la misma fecha y hora
     const verificarDisponibilidad =
-      "SELECT idTurno FROM turnos WHERE idMedico = ? AND FechaRequeridaTurno = ? AND HoraRequeridaTurno = ? AND EstadoTurno != 'Cancelado'";
+      "SELECT idTurno FROM turnos WHERE idMedico = ? AND FechaRequeridaTurno = ? AND HorarioRequeridoTurno = ? AND EstadoTurno != 'Cancelado'";
 
     db.query(
       verificarDisponibilidad,
-      [idMedico, FechaRequeridaTurno, HoraRequeridaTurno],
+      [idMedico, FechaRequeridaTurno, HorarioRequeridoTurno],
       (error, results) => {
         if (error) {
           console.log(error);
@@ -44,7 +42,7 @@ export const solicitarTurno = (req, res) => {
 
         // Si hay disponibilidad, procede a otorgar el turno
         const solicitar =
-          "INSERT INTO turnos (idPaciente, idMedico, FechaRequeridaTurno, HoraRequeridaTurno, EstadoTurno) VALUES (?, ?, ?, ?, 'Pendiente')";
+          "INSERT INTO turnos (idPaciente, idMedico, FechaRequeridaTurno, HorarioRequeridoTurno, EstadoTurno) VALUES (?, ?, ?, ?, 'Pendiente')";
 
         db.query(
           solicitar,
@@ -52,8 +50,7 @@ export const solicitarTurno = (req, res) => {
             idPaciente,
             idMedico,
             FechaRequeridaTurno,
-            HoraRequeridaTurno,
-            EstadoTurno,
+            HorarioRequeridoTurno,
           ],
           (error, results) => {
             if (error) {
@@ -79,16 +76,16 @@ export const solicitarTurno = (req, res) => {
 // traer turnos por fecha
 export const traerTurnosPorFecha = (req, res) => {
   try {
-    const { fechaSolicitudTurno } = req.params;
-    
+    const { FechaRequeridaTurno } = req.params;
+
     // Validar que se proporcione la fecha
-    if (!fechaSolicitudTurno) {
+    if (!FechaRequeridaTurno) {
       return res.status(400).json({ message: "La fecha es obligatoria" });
     }
-    
+
     // Consulta para traer los turnos de la fecha especificada
     const traerTurnos = "SELECT * FROM turnos WHERE FechaRequeridaTurno = ?";
-    db.query(traerTurnos, [fechaSolicitudTurno], (error, results) => {
+    db.query(traerTurnos, [FechaRequeridaTurno], (error, results) => {
       if (error) {
         console.log(error);
         return res.status(500).json({ message: "Error al traer turnos" });
