@@ -77,6 +77,7 @@ export const solicitarTurno = (req, res) => {
 export const traerTurnosPorFecha = (req, res) => {
   try {
     const { FechaRequeridaTurno } = req.params;
+    console.log(FechaRequeridaTurno);
 
     // Validar que se proporcione la fecha
     if (!FechaRequeridaTurno) {
@@ -97,3 +98,27 @@ export const traerTurnosPorFecha = (req, res) => {
     res.status(500).json({ message: "Error en el servidor" });
   }
 };
+
+export const cancelarTurno = (req, res) =>{
+  try {
+    const { idTurno} = req.params;
+
+    if(!idTurno){
+      return res.status(400).json({message: "El id del turno es obligatorio"});
+    }
+    const cancelar = "UPDATE turnos SET EstadoTurno = 'Cancelado' WHERE idTurno = ?";
+    db.query(cancelar, [idTurno], (error, results) => {
+      if (error) {
+        console.log(error);
+        return res.status(500).json({ message: "Error al cancelar turno" });
+      }
+      if(results.affectedRows === 0){
+        return res.status(404).json({message: "Turno no encontrado"});
+      }
+      res.status(200).json({message: "Turno cancelado con éxito"});
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Error en el servidor" });
+  }
+}
