@@ -73,3 +73,26 @@ const darBajaSocio = (req, res)=>{
         res.status(201).json({message:"Socio dado de baja con exito"})
     })
 }
+
+
+const reactivarSocio = (req, res)=>{
+    const id = req.params.id;
+    const consulta = "update socios set activo = true where idSocio=?";
+
+    conection.query(consulta,[id], (err,result)=>{
+        if(err){
+            console.log("Error al reactivar al socio", err)
+            return res.status(500).json({error:"Error al reactivar al socio"})
+        }
+        res.status(201).json({message:"Socio reactivado con exito"})
+    })
+}
+
+module.exports ={
+    getSocios,
+    getSocio,
+    createSocio,
+    updateSocio,
+    darBajaSocio,
+    reactivarSocio
+} 
