@@ -3,7 +3,7 @@ const {connection} = require('../config/config');
 
 const mostrarTodosUsuarios = (req, res) => {
 
-    const queryUsuario = "select * from Usuarios";
+    const queryUsuario = "select * from Usuarios where activo = 1";
 
     connection.query(queryUsuario, (error, results)=>{
         if(error){
@@ -14,6 +14,25 @@ const mostrarTodosUsuarios = (req, res) => {
         res.status(200).json(results);
     });
 
+}
+
+const mostrarUsuariosInactivos = (req,res)=>{
+
+    const queryUsuarioInactivo = "select * from Usuarios where activo = 0";
+
+    connection.query(queryUsuarioInactivo, (error,results)=>
+    {
+        if(error){
+            console.error("Error al obtener los usuarios inactivos: ", error);
+            res.status(500).json({message: "Error al obtener los usuarios inactivos"});
+        }
+
+        if(results.length === 0){
+            return res.status(404).json({message: "No hay usuarios inactivos"});
+        }
+
+        res.status(200).json(results);  
+    })
 }
 
 const mostrarUsuarioPorId = (req, res) => {
@@ -70,7 +89,7 @@ const eliminarUsuario = (req, res) => {
 }
 
 //eliminacion logica
-const activarUsuario = (req, res) => {
+const eliminadoLogicoUsuario = (req, res) => {
     const id = req.params.id;
     const queryActivarUsuario = "UPDATE Usuarios SET activo = ? WHERE id = ?";
     connection.query(queryActivarUsuario, [0, id], (error, results) => {
@@ -82,5 +101,24 @@ const activarUsuario = (req, res) => {
     });
 }
 
+// Activar usuarios inactivos
+ const activarUsuario = (req, res) => { 
 
-module.exports = {mostrarTodosUsuarios, mostrarUsuarioPorId,crearUsuario,actualizarUsuario,eliminarUsuario,activarUsuario}
+    const id= req.params.id;
+    const queryActivarUsuario = "UPDATE Usuarios SET activo = ? WHERE id = ?";
+
+    connection.query(queryActivarUsuario, [1, id], (error, results) => {
+        if (error) {
+            console.error("Error al activar el usuario: ", error);
+            res.status(500).json({ message: "Error al activar el usuario" });
+        }
+
+        if(results.affectedRows === 0){
+            return res.status(404).json({message: "Usuario no encontrado"});
+        }
+        res.status(200).json({ message: "Usuario activado exitosamente" });
+    });
+ }
+
+
+module.exports = {mostrarTodosUsuarios,mostrarUsuariosInactivos, mostrarUsuarioPorId,crearUsuario,actualizarUsuario,eliminarUsuario,eliminadoLogicoUsuario,activarUsuario}
