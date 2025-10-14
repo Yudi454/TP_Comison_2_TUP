@@ -6,6 +6,7 @@ import db from "./config/db.js";
 import medicosRoutes from "./routes/medicos.routes.js";
 import categoriasMedicoRoutes from "./routes/categoriaMedico.routes.js";
 import turnoRoutes from "./routes/turnos.routes.js";
+import observacionesRoutes from "./routes/observaciones.routes.js";
 
 //Inicializamos dotenv para llamar las variables de entorno
 
@@ -29,8 +30,6 @@ app.use(express.json());
 
 const PORT = process.env.PORT || 3000;
 
-//middleware
-app.use(express.json());
 //Rutas
 
 app.use("/api/medicos/v1", medicosRoutes);
@@ -38,6 +37,8 @@ app.use("/api/categoriasMedico/v1", categoriasMedicoRoutes);
 
 //Turnos
 app.use("/api/turnos/v1", turnoRoutes);
+//Observaciones
+app.use("/api/observaciones/v1", observacionesRoutes);
 
 //Inicializamos el servidor
 
