@@ -66,4 +66,22 @@ const crearReserva = (req, res) => {
     });
 };
 
-module.exports = { mostrarReservas, crearReserva };
+const eliminarReserva = (req, res) => {
+    const { idReserva } = req.params;
+
+    const consulta = "DELETE FROM reservas WHERE idReserva = ?";
+    connection.query(consulta, [idReserva], (error, results) => {
+        if (error) {
+            console.error("Error al eliminar la reserva:", error);
+            return res.status(500).json({ error: "Error al eliminar la reserva" });
+        }
+
+        if (results.affectedRows === 0) {
+            return res.status(404).json({ mensaje: "Reserva no encontrada" });
+        }
+
+        res.json({ mensaje: "Reserva eliminada correctamente" });
+    });
+};
+
+module.exports = { mostrarReservas, crearReserva, eliminarReserva };
