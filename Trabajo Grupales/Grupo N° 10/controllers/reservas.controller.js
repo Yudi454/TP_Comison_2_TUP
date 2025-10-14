@@ -49,3 +49,21 @@ const addReserva = (req, res) => {
     })
 }
 
+// Eliminar reserva
+const deleteReserva = (req, res) => {
+    const id = req.params.id
+    const sql = "DELETE FROM reservas WHERE id = ?"
+
+    conection.query(sql, [id], (error, results) => {
+        if (error) throw error
+
+        if (results.affectedRows === 0) {
+            res.status(404).send({ mensaje: "Reserva no encontrada" })
+        } else {
+            res.send({ mensaje: "Reserva eliminada correctamente" })
+        }
+    })
+}
+
+module.exports = { getReservas, addReserva, deleteReserva }
+
