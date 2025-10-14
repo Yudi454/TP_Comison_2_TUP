@@ -4,8 +4,7 @@ import db from "./config/db.js";
 
 
 // Importamos las rutas creadas
-import medicosRoutes from "./routes/medicos.routes.js";
-import categoriasMedicoRoutes from "./routes/categoriaMedico.routes.js";
+
 //Inicializamos dotenv para llamar las variables de entorno
 
 dotenv.config();
@@ -21,6 +20,9 @@ db.connect((error) => {
 });
 const app = express();
 
+//Middlewares
+app.use(express.json());
+
 //Configuracion del puerto
 
 const PORT = process.env.PORT || 3000;
@@ -28,9 +30,6 @@ const PORT = process.env.PORT || 3000;
 //middleware 
 app.use(express.json());
 //Rutas
-
-app.use('/api/medicos/v1', medicosRoutes);
-app.use('/api/categoriasMedico/v1', categoriasMedicoRoutes);
 
 //Inicializamos el servidor
 
