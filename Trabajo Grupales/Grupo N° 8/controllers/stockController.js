@@ -36,16 +36,27 @@ const getOneStock = (req, res) => {
   });
 };
 
-//Traer los productos con stock minimo
+//Traer los productos con stock mínimo
 const getStockMinimo = (req, res) => {
-  const consulta =
-    "SELECT * FROM stock s JOIN productos p ON s.id_producto = p.id_producto WHERE s.estado_stock = 1 AND s.cantidad < (SELECT AVG(cantidad) FROM stock WHERE estado_stock = 1)";
+  const consulta = `
+    SELECT * 
+    FROM stock s 
+    JOIN productos p ON s.id_producto = p.id_producto 
+    WHERE s.estado_stock = 1 
+    AND s.cantidad < (SELECT AVG(cantidad) FROM stock WHERE estado_stock = 1)
+  `;
 
   conection.query(consulta, (err, results) => {
     if (err) {
       return res
         .status(500)
-        .json({ message: "Error al traer los stock minimos" });
+        .json({ message: "Error al traer los stock mínimos" });
+    }
+
+    if (results.length === 0) {
+      return res
+        .status(200)
+        .json({ message: "No hay productos con stock bajo" });
     }
 
     return res.status(200).json(results);
@@ -55,5 +66,5 @@ const getStockMinimo = (req, res) => {
 module.exports = {
   getAllStock,
   getOneStock,
-  getStockMinimo
-}
+  getStockMinimo,
+};

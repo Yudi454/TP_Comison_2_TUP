@@ -2,6 +2,8 @@ const conection = require("../config/database");
 
 // Entrada de stock
 const entradaStock = (req, res) => {
+  console.log("Entre en entrada de stock");
+
   //Recibo el id del stock desde los parametros
   const { id_stock } = req.params;
   //Recibo desde el cuero la cantidad y un comentario
@@ -181,5 +183,5 @@ module.exports = {
   entradaStock,
   salidaStock,
   getAllMovimientos,
-  getMovimientoPorProducto
-}
+  getMovimientoPorProducto,
+};

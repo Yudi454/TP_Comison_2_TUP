@@ -3,7 +3,7 @@
 // Express es el framework que usamos para manejar las rutas y peticiones HTTP
 const express = require("express");
 // Importamos las funciones del controlador de productos
-const { getAllProducts, getOneProduct, deleteProduct, updateProduct, createProduct } = require("../controllers/productos");
+const { getAllProducts, getOneProduct, deleteProduct, updateProduct, createProduct } = require("../controllers/productosController");
 // Creamos un enrutador (objeto que agrupa todas las rutas de productos)
 const router = express.Router()
 

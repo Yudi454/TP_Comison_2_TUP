@@ -1,12 +1,27 @@
-const express = require("express")
-const Routes=express.Router()
+const express = require("express");
+const Routes = express.Router();
 
-const {getAllProveedores,getProveedores,createProveedores,updateProveedores,deleteProveedores}=require("./../controllers/proveedoresControllers")
+const {
+  getAllProveedores,
+  getProveedores,
+  createProveedores,
+  updateProveedores,
+  deleteProveedores,
+} = require("./../controllers/proveedoresControllers");
 
-Routes.get("/",getAllProveedores)
-Routes.get("/buscador",getProveedores)
-Routes.post("/create",createProveedores)
-Routes.put("/update/:id",updateProveedores)
-Routes.delete("/delete/:id",deleteProveedores)
+//Traer todos los proveedores
+Routes.get("/", getAllProveedores);
 
-module.exports=Routes
+//Traer un proveedor
+Routes.get("/buscador", getProveedores);
+
+//Crear un proveedor
+Routes.post("/create", createProveedores);
+
+//Actualizar un proveedor
+Routes.put("/update/:id", updateProveedores);
+
+//Eliminar un proveedor
+Routes.delete("/delete/:id", deleteProveedores);
+
+module.exports = Routes;

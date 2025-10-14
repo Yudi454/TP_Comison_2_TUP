@@ -10,15 +10,15 @@ const {
 const router = express.Router();
 
 //Entrada de stock
-router.post("/entrada/:id", entradaStock);
+router.post("/entrada/:id_stock", entradaStock);
 
 //Salida de stock
-router.post("/salida/:id", salidaStock);
+router.post("/salida/:id_stock", salidaStock);
 
 //Traer todos los movimientos
 router.get("/", getAllMovimientos);
 
 //Traer movimientos por producto
-router.get("/:id", getMovimientoPorProducto);
+router.get("/:id_producto", getMovimientoPorProducto);
 
 module.exports = router;

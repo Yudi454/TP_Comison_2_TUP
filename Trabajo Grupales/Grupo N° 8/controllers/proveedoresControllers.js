@@ -20,6 +20,8 @@ const getAllProveedores = (req, res) => {
 }
 
 const getProveedores = (req, res) => {
+    console.log("Entre a get un proveedor");
+    
     const { nombre_proveedor } = req.body
 
     const consulta = `select 
@@ -71,6 +73,8 @@ const createProveedores = (req, res) => {
 }
 
 const updateProveedores = (req, res) => {
+    console.log("Entre a update proveedores");
+    
     const { id } = req.params
 
     const {

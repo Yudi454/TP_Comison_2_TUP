@@ -69,23 +69,15 @@ const deleteProduct = (req, res) => {
 const updateProduct = (req, res) => {
   // Obtenemos los datos desde el body y los parámetros
   const { id_producto } = req.params;
-  const { id_proveedor, nombre_producto, categoria, precio, estado_producto } =
-    req.body;
+  const { id_proveedor, nombre_producto, categoria, precio } = req.body;
 
   // Consulta SQL: actualiza los datos del producto por su ID
   const consulta =
-    "UPDATE producto SET id_proveedor=? , nombre_producto=? , categoria=? , precio=? , estado_producto=? WHERE id_producto=? ";
+    "UPDATE productos SET id_proveedor=? , nombre_producto=? , categoria=? , precio=? WHERE id_producto=? ";
 
   conection.query(
     consulta,
-    [
-      id_proveedor,
-      nombre_producto,
-      categoria,
-      precio,
-      estado_producto,
-      id_producto,
-    ],
+    [id_proveedor, nombre_producto, categoria, precio, id_producto],
     (err, result) => {
       if (err) {
         // Si ocurre un error, lo mostramos en consola y devolvemos error 500
@@ -101,30 +93,55 @@ const updateProduct = (req, res) => {
   );
 };
 
-//   CREAR UN NUEVO PRODUCTO
+//   CREAR UN NUEVO PRODUCTO (crea también el stock inicial)
 const createProduct = (req, res) => {
+  console.log("Entre en crear producto");
+
   // Extraemos los datos del producto desde el cuerpo de la solicitud
-  const { id_proveedor } = req.body;
-  const { nombre_producto, categoria, precio, estado_producto } = req.body;
+  const { nombre_producto, categoria, precio, id_proveedor, cantidad_inicial } =
+    req.body;
 
   // Consulta SQL: inserta un nuevo registro en la tabla 'productos'
-  const consulta =
-    "INSERT INTO productos ( id_proveedor, nombre_producto ,categoria , precio , estado_producto) VALUES ( ?, ?, ?, ?,?);";
+  const consultaProducto =
+    "INSERT INTO productos (id_proveedor, nombre_producto, categoria, precio) VALUES (?, ?, ?, ?);";
 
-  // Ejecutamos la consulta con los valores proporcionados
+  // Ejecutamos la consulta para crear el producto
   conection.query(
-    consulta,
-    [id_proveedor, nombre_producto, categoria, precio, estado_producto],
+    consultaProducto,
+    [id_proveedor, nombre_producto, categoria, precio],
     (err, result) => {
       if (err) {
         console.error("Error al cargar el producto:", err);
         return res
           .status(500)
-          .send({ message: "Ocurrió un error en el servidor." });
-      } else {
-        // Si el producto se insertó correctamente, devolvemos confirmación
-        res.status(200).send({ message: "Producto cargado correctamente." });
+          .send({ message: "Ocurrió un error al cargar el producto." });
       }
+
+      // Obtenemos el id del nuevo producto
+      const id_producto = result.insertId;
+      const cantidad = Number(cantidad_inicial) || 0;
+
+      // Insertamos el stock inicial
+      const consultaStock =
+        "INSERT INTO stock (id_producto, cantidad) VALUES (?, ?);";
+
+      conection.query(consultaStock, [id_producto, cantidad], (err2) => {
+        if (err2) {
+          console.error("Error al crear el stock inicial:", err2);
+          return res
+            .status(500)
+            .send({
+              message:
+                "Producto creado, pero ocurrió un error al crear el stock.",
+            });
+        }
+
+        // Si todo salió bien
+        res.status(201).send({
+          message: "Producto y stock creados correctamente.",
+          id_producto,
+        });
+      });
     }
   );
 };
