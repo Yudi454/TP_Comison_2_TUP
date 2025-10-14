@@ -55,9 +55,21 @@ const updateSocio = async (req,res) =>{
     conection.query(consulta, [nombreSocio, apellidoSocio, emailSocio, contraEncrip, id], (err,result)=>{
         if(err){
             console.log("Error al actualizar el socio",err)
-            res.status(500).json({error:"Error al actulizar el socio"})
+           return res.status(500).json({error:"Error al actulizar el socio"})
         }
         res.status(201).json({message:"Socio actualizado con exito"})
     })
 }
 
+const darBajaSocio = (req, res)=>{
+    const id = req.params.id;
+    const consulta = "update socios set activo = false where idSocio=?";
+
+    conection.query(consulta,[id], (err,result)=>{
+        if(err){
+            console.log("Error al dar de baja al socio", err)
+            return res.status(500).json({error:"Error al dar de baja al socio"})
+        }
+        res.status(201).json({message:"Socio dado de baja con exito"})
+    })
+}
