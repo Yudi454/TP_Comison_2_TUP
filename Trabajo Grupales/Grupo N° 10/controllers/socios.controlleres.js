@@ -29,8 +29,8 @@ const getSocio = (req, res) =>{
 const createSocio = async (req, res)=>{
     const {nombreSocio, apellidoSocio, emailSocio, contraSocio} = req.body;
 
-    let salt = await bcryptjs.genSalt(10);
-    let contraEncrip = await bcryptjs.hash(contraSocio, salt);
+    let salt = await brcyptjs.genSalt(10);
+    let contraEncrip = await brcyptjs.hash(contraSocio, salt);
 
     const consulta = "insert into socios (nombreSocio, apellidoSocio, emailSocio, contraSocio) values (?,?,?,?)";
     
@@ -42,3 +42,22 @@ const createSocio = async (req, res)=>{
         res.status(201).json({message:"Socio creado con exito"})
     })
 }
+
+const updateSocio = async (req,res) =>{
+    const id = req.params.id
+    const {nombreSocio, apellidoSocio, emailSocio, contraSocio} = req.body;
+    
+    let salt = await brcyptjs.genSalt(10);
+    let contraEncrip = await brcyptjs.hash(contraSocio, salt);
+
+    const consulta = "update socios set nombreSocio=?, apellidoSocio=?, emailSocio=?, contraSocio=? where idSocio =?"
+
+    conection.query(consulta, [nombreSocio, apellidoSocio, emailSocio, contraEncrip, id], (err,result)=>{
+        if(err){
+            console.log("Error al actualizar el socio",err)
+            res.status(500).json({error:"Error al actulizar el socio"})
+        }
+        res.status(201).json({message:"Socio actualizado con exito"})
+    })
+}
+
