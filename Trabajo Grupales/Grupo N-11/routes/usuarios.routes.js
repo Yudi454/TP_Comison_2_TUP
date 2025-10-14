@@ -1,9 +1,10 @@
 const express = require("express");
-const { obtenerUsuarioPorId, crearUsuario, actualizarUsuario, eliminarUsuario } = require("../controllers/usuarios.controller");
+const { getUsuarioPorId, crearUsuario, actualizarUsuario, eliminarUsuario, GetAllUsuarios } = require("../controllers/usuarios.controller");
 
 const router = express.Router();
 
-router.post("/usuario/id", obtenerUsuarioPorId); 
+router.get("/usuarios/:id_usuario", getUsuarioPorId); 
+router.get("/usuarios", GetAllUsuarios);
 router.post("/usuario", crearUsuario);
 router.put("/usuario", actualizarUsuario);
 router.delete("/usuario", eliminarUsuario);

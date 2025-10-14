@@ -1,17 +1,27 @@
 const express = require('express');
 const {connection} = require("./config/DB")
 const routesUsuario = require("./routes/usuarios.routes")
+const routesCategorias = require("./routes/categorias.routes")
+const routesLibros = require("./routes/libros.routes")
+const routesPrestamos = require("./routes/prestamos.routes")
+const morgan = require('morgan')
 const cors = require('cors')
+const helmet = require('helmet')
 
 
 const app = express();
 
 app.use(express.json())
 app.use(cors())
+app.use(morgan('dev'))
+app.use(helmet())
 app.use("/", routesUsuario);
+app.use("/", routesCategorias);
+app.use("/", routesLibros);
+app.use("/", routesPrestamos);
 
 app.get("/",(req,res)=>{
-    res.send(" PRIETO JUAN MAXIMILIANO - GRUPO 11")
+    res.send(" Backend Biblioteca funcionando")
 })
 
 

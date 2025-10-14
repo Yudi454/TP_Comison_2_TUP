@@ -1,7 +1,7 @@
 const { connection } = require("../config/DB");
 
-const obtenerUsuarioPorId = (req, res) => {
-	const { id_usuario } = req.body;
+const getUsuarioPorId = (req, res) => {
+	const { id_usuario } = req.params || req.body;
 	const query = "SELECT * FROM usuarios WHERE id_usuario = ?";
 	connection.query(query, [id_usuario], (err, results) => {
 		if (err) {
@@ -14,10 +14,20 @@ const obtenerUsuarioPorId = (req, res) => {
 	});
 };
 
+const GetAllUsuarios = (req, res) => {
+	const query = "SELECT * FROM usuarios WHERE activo_usuario = 1";
+	connection.query(query, (err, results) => {
+		if (err) {
+			return res.status(500).json({ error: "Error al obtener los usuarios", details: err.message });
+		}   
+		res.json(results);
+	});
+}
+
 const crearUsuario = (req, res) => {
-	const { nombre, email, contrasena } = req.body;
-	const query = "INSERT INTO usuarios (nombre, email, contrasena, activo_usuario) VALUES (?, ?, ?, 1)";
-	connection.query(query, [nombre, email, contrasena], (err, results) => {
+	const { usuario_nombre, usuario_dni, usuario_curso } = req.body;
+	const query = "INSERT INTO usuarios (usuario_nombre, usuario_dni, usuario_curso, activo_usuario) VALUES (?, ?, ?, 1)";
+	connection.query(query, [usuario_nombre, usuario_dni, usuario_curso], (err, results) => {
 		if (err) {
 			return res.status(500).json({ error: "Error al crear el usuario", details: err.message });
 		}
@@ -26,9 +36,9 @@ const crearUsuario = (req, res) => {
 };
 
 const actualizarUsuario = (req, res) => {
-	const { id_usuario, nombre, email, contrasena, activo_usuario } = req.body;
-	const query = "UPDATE usuarios SET nombre = ?, email = ?, contrasena = ?, activo_usuario = ? WHERE id_usuario = ?";
-	connection.query(query, [nombre, email, contrasena, activo_usuario, id_usuario], (err, results) => {
+	const { id_usuario, usuario_nombre, usuario_dni, usuario_curso, activo_usuario } = req.body;
+	const query = "UPDATE usuarios SET usuario_nombre = ?, usuario_dni = ?, usuario_curso = ?, activo_usuario = ? WHERE id_usuario = ?";
+	connection.query(query, [usuario_nombre, usuario_dni, usuario_curso, activo_usuario, id_usuario], (err, results) => {
 		if (err) {
 			return res.status(500).json({ error: "Error al actualizar el usuario", details: err.message });
 		}
@@ -40,9 +50,9 @@ const actualizarUsuario = (req, res) => {
 };
 
 const eliminarUsuario = (req, res) => {
-	const id = req.body.id_usuario;
+	const { id_usuario } = req.params || req.body;
 	const query = "UPDATE usuarios SET activo_usuario = 0 WHERE id_usuario = ?";
-	connection.query(query, [id], (err, results) => {
+	connection.query(query, [id_usuario], (err, results) => {
 		if (err) {
 			return res.status(500).json({ error: "Error al eliminar el usuario", details: err.message });
 		}
@@ -53,4 +63,4 @@ const eliminarUsuario = (req, res) => {
 	});
 };
 
-module.exports = { obtenerUsuarioPorId, crearUsuario, actualizarUsuario, eliminarUsuario };
+module.exports = { getUsuarioPorId, crearUsuario, actualizarUsuario, eliminarUsuario, GetAllUsuarios };
