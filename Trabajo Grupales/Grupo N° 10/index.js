@@ -1,6 +1,7 @@
 require("dotenv").config()
 const express = require('express');
 const { conection } = require('./config/database');
+const routesSocios = require("./routes/socios.routes")
 const cors = require('cors');
 const app = express();
 
@@ -12,7 +13,7 @@ app.use(express.json());
 app.get('/', (req, res) => {
     res.send('Bienvenido a GymCode');
 });
-
+app.use("/",routesSocios)
 
 // Conexión a la base de datos
 conection.connect((err) => {

@@ -1,6 +1,6 @@
-const express = require("express");
+const express = require("express")
 const {getSocios, getSocio, createSocio, updateSocio, darBajaSocio, reactivarSocio} = require("../controllers/socios.controlleres");
-const router = express.Router;
+const router = express.Router();
 
 router.get("/socios",getSocios);
 router.get("/socios/:id", getSocio);
