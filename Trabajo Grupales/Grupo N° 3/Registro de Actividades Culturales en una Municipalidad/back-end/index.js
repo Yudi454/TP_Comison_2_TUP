@@ -14,6 +14,7 @@ app.use('/api/eventos', require('./routes/eventos.routes'));
 app.use('/api/artistas-eventos', require('./routes/artistas_eventos.routes'));
 app.use('/api/ventas-boletos', require('./routes/ventas_boletos.routes'));
 app.use('/api/artistas', require('./routes/artistas.routes'));
+app.use('/api/lugares', require('./routes/lugares.routes'));
 
 // RUTA PRINCIPAL
 app.get('/', (req, res) => {
