@@ -25,3 +25,20 @@ const getSocio = (req, res) =>{
     res.status(200).json({ message: "Socio traido con exito", result });
     })
 }
+
+const createSocio = async (req, res)=>{
+    const {nombreSocio, apellidoSocio, emailSocio, contraSocio} = req.body;
+
+    let salt = await bcryptjs.genSalt(10);
+    let contraEncrip = await bcryptjs.hash(contraSocio, salt);
+
+    const consulta = "insert into socios (nombreSocio, apellidoSocio, emailSocio, contraSocio) values (?,?,?,?)";
+    
+    conection.query(consulta,[nombreSocio, apellidoSocio, emailSocio, contraEncrip],(err, result)=>{
+        if(err){
+            console.log("Error al crear Socio",err)
+            return res.status(500).json({error:"Error al crear Socio"})
+        }
+        res.status(201).json({message:"Socio creado con exito"})
+    })
+}
