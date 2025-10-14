@@ -3,9 +3,11 @@ import dotenv from "dotenv";
 import db from "./config/db.js";
 
 // Importamos las rutas creadas
+
 import medicosRoutes from "./routes/medicos.routes.js";
 import categoriasMedicoRoutes from "./routes/categoriaMedico.routes.js";
 import turnoRoutes from "./routes/turnos.routes.js";
+import pacientesRoutes from './routes/pacientes.routes.js';
 
 //Inicializamos dotenv para llamar las variables de entorno
 
@@ -20,6 +22,8 @@ db.connect((error) => {
   }
   console.log("Conexion a la DB exitosa");
 });
+
+//Inicializamos express
 const app = express();
 
 //Middlewares
@@ -33,11 +37,15 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 //Rutas
 
+//Medicos y categorias
 app.use("/api/medicos/v1", medicosRoutes);
 app.use("/api/categoriasMedico/v1", categoriasMedicoRoutes);
 
 //Turnos
 app.use("/api/turnos/v1", turnoRoutes);
+
+//Pacientes
+app.use("api/pacientes/v1", pacientesRoutes);
 
 //Inicializamos el servidor
 
