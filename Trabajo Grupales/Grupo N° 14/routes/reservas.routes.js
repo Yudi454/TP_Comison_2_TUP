@@ -3,13 +3,9 @@ const { mostrarReservas, crearReserva, eliminarReserva } = require('../controlle
 
 const router = express.Router();
 
-// Listar todas las reservas
+
 router.get('/reservas', mostrarReservas);
-
-// Crear nueva reserva
-router.post('/reservas/crearReserva', crearReserva);
-
-// Eliminar una reserva por ID
-router.delete('/reservas/:idReserva', eliminarReserva);
+router.post('/reservas/crearReserva', crearReserva)
+router.delete('/reservas/eliminarReserva/:idReserva', eliminarReserva);
 
 module.exports = router;
