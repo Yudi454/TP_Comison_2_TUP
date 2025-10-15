@@ -23,34 +23,31 @@ const getPrestamosPorId = (req, res) => {
     });
 }
 
+
 const crearPrestamo = (req, res) => {
     const { id_usuario, id_libro } = req.body;
     if (!id_usuario || !id_libro) return res.status(400).json({ error: "Faltan id_usuario o id_libro" });
-
-    connection.beginTransaction(err => {
-        if (err) return res.status(500).json({ error: 'Error al iniciar transacción', details: err.message });
-        const qStock = "SELECT libro_stock FROM libros WHERE id_libro = ? FOR UPDATE";
-        connection.query(qStock, [id_libro], (err, results) => {
-            if (err) return connection.rollback(() => res.status(500).json({ error: 'Error al consultar stock', details: err.message }));
-            if (results.length === 0) return connection.rollback(() => res.status(404).json({ error: 'Libro no encontrado' }));
-            const stock = results[0].libro_stock;
-            if (stock <= 0) return connection.rollback(() => res.status(400).json({ error: 'No hay ejemplares disponibles' }));
-            const qInsert = "INSERT INTO prestamos (id_libro, id_usuario) VALUES (?, ?)";
-            connection.query(qInsert, [id_libro, id_usuario], (err, insertRes) => {
-                if (err) return connection.rollback(() => res.status(500).json({ error: 'Error al crear préstamo', details: err.message }));
-                const qUpdateStock = "UPDATE libros SET libro_stock = libro_stock - 1 WHERE id_libro = ?";
-                connection.query(qUpdateStock, [id_libro], (err, updRes) => {
-                    if (err) return connection.rollback(() => res.status(500).json({ error: 'Error al actualizar stock', details: err.message }));
-
-                    connection.commit(commitErr => {
-                        if (commitErr) return connection.rollback(() => res.status(500).json({ error: 'Error al confirmar transacción', details: commitErr.message }));
-                        res.status(201).json({ message: 'Préstamo creado con éxito', id_prestamo: insertRes.insertId });
-                    });
-                });
+    const qStock = "SELECT libro_stock FROM libros WHERE id_libro = ? FOR UPDATE";
+    connection.query(qStock, [id_libro], (err, results) => {
+        if (err) return res.status(500).json({ error: 'Error al consultar stock', details: err.message });
+        if (results.length === 0) return res.status(404).json({ error: 'Libro no encontrado' });
+        const stock = results[0].libro_stock;
+        if (stock <= 0) return res.status(400).json({ error: 'No hay ejemplares disponibles' });
+        
+        const qInsert = "INSERT INTO prestamos (id_libro, id_usuario) VALUES (?, ?)";
+        connection.query(qInsert, [id_libro, id_usuario], (err, insertRes) => {
+            if (err) return res.status(500).json({ error: 'Error al crear préstamo', details: err.message });
+            
+            const qUpdateStock = "UPDATE libros SET libro_stock = libro_stock - 1 WHERE id_libro = ?";
+            connection.query(qUpdateStock, [id_libro], (err, updRes) => {
+                if (err) return res.status(500).json({ error: 'Error al actualizar stock', details: err.message });
+                
+                res.status(201).json({ message: 'Préstamo creado con éxito', id_prestamo: insertRes.insertId });
             });
         });
     });
-}
+};
+
 
 const actualizarPrestamo = (req, res) => {
     const id_prestamo = req.params.id_prestamo || req.body.id_prestamo;

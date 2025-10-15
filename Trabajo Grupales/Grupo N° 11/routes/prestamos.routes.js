@@ -3,8 +3,8 @@ const { getPrestamos, getPrestamosPorId, crearPrestamo, actualizarPrestamo, elim
 
 const router = express.Router();
 
-router.get('/prestamos', getPrestamos);
-router.get('/prestamos/:id_prestamo', getPrestamosPorId);
+router.get('/prestamo', getPrestamos);
+router.get('/prestamo/:id_prestamo', getPrestamosPorId);
 router.post('/prestamo', crearPrestamo);
 router.put('/prestamo', actualizarPrestamo);
 router.delete('/prestamo', eliminarPrestamo);
