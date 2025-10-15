@@ -11,8 +11,8 @@ app.use(express.json());
 
 // RUTAS
 app.use('/api/eventos', require('./routes/eventos.routes'));
-app.use('/api/artistas-eventos', require('./routes/artistas_eventos.routes'));
-app.use('/api/ventas-boletos', require('./routes/ventas_boletos.routes'));
+app.use('/api/artistas_eventos', require('./routes/artistas_eventos.routes'));
+app.use('/api/ventas_boletos', require('./routes/ventas_boletos.routes'));
 app.use('/api/artistas', require('./routes/artistas.routes'));
 app.use('/api/lugares', require('./routes/lugares.routes'));
 
@@ -22,7 +22,11 @@ app.get('/', (req, res) => {
     message: 'Bienvenido al Sistema de Gestión Cultural',
     endpoints: {
       eventos: '/api/eventos',
-      artistas_eventos: '/api/artistas-eventos'
+      artistas_eventos: '/api/artistas_eventos',
+      ventas_boletos: '/api/ventas_boletos',
+      artistas: '/api/artistas',
+      lugares: '/api/lugares'
+
     }
   });
 });
