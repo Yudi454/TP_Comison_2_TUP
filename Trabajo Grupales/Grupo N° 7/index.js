@@ -14,16 +14,13 @@ app.use(helmet());
 app.use(cors());
 app.use(express.json());
 
-// Rutas
+
 app.use('/clientes', clientesRoutes);
 app.use('/servicios', serviciosRoutes);
 app.use('/turnos', turnosRoutes);
 
 
-app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).json({ message: 'Error interno del servidor' });
-});
+
 
 
 const PORT = process.env.PORT || 3000;

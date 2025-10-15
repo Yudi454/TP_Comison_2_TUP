@@ -1,4 +1,4 @@
-const { pool } = require('./config/dataBase.js'); // ruta a tu dataBase.js
+const { pool } = require('./config/dataBase.js'); 
 
 (async () => {
     try {
