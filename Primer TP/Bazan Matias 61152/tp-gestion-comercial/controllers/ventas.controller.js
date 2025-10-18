@@ -1,4 +1,4 @@
-import db from "../config/db.js";
+import db from "../config/DB.js";
 
 // Traer todas las ventas
 export const traerVentas = async (req, res) => {
