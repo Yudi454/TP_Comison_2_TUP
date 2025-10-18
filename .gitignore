@@ -43,7 +43,6 @@ coverage/
 
 # Archivos de bases de datos temporales
 *.sqlite
-*.sql
 *.bak
 *.tmp
 
