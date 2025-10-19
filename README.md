@@ -117,6 +117,11 @@ En el Google Drive se encuentran subidos los videos con los nuevos temas
 
  Todos los integrantes participaron con merge / commits propios
 
+
+ imagen de estructura de proyecto
+
+ ![Estructura de Proyecto](./arquitectura%20de%20carpetas.jpg)
+
 # Estructura de Proyecto Sugerida
 
 
