@@ -1,4 +1,4 @@
-const {connection} = require('../database/db');
+const {connection} = require('../config/config');
 const mostrarTodosVentas = (req, res) => {
 
 
@@ -16,10 +16,10 @@ const mostrarTodosVentas = (req, res) => {
 };
 
 const mostrarVentasInactivas = (req, res) => {
-    const queryDetalleVentas = "SELECT * FROM detalle_ventas dv
+    const queryDetalleVentas = `"SELECT * FROM detalle_ventas dv
     JOIN ventas v ON dv.id_venta = v.id_venta
     JOIN productos p ON dv.id_producto = p.id_producto
-    WHERE v.activo = 0";
+    WHERE v.activo = 0"`;
 
     connection.query(queryDetalleVentas, (error, results) => {
         if (error) {
@@ -31,10 +31,10 @@ const mostrarVentasInactivas = (req, res) => {
 
 const mostrarVentasPorId = (req, res) => {
     const { id } = req.params;
-    const queryDetalleVentas = "SELECT * FROM detalle_ventas dv
+    const queryDetalleVentas = `"SELECT * FROM detalle_ventas dv
     JOIN ventas v ON dv.id_venta = v.id_venta
     JOIN productos p ON dv.id_producto = p.id_producto
-    WHERE v.activo = 1 AND dv.id_detalle = ?";
+    WHERE v.activo = 1 AND dv.id_detalle = ?"`;
 
     connection.query(queryDetalleVentas, [id], (error, results) => {
         if (error) {

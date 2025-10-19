@@ -12,4 +12,13 @@ const connection = mysql.createConnection({
     database: process.env.DB_NAME
 });
 
+// Conectar a la base de datos
+connection.connect((error) => {
+    if (error) {
+        console.error("Error de conexion a la base de datos: ", error);
+        return;
+    }
+    console.log("Conexion a la base de datos exitosa");
+});
+
 module.exports = {connection};// estoy habilitando que sea llamado desde otro archivo

@@ -1,4 +1,6 @@
 const {connection} = require('../config/config');
+const {hashPassword} = require('../utils/hash.utils');
+
 
 
 const mostrarTodosUsuarios = (req, res) => {
@@ -50,9 +52,11 @@ const mostrarUsuarioPorId = (req, res) => {
 const crearUsuario = (req, res) => {
     const { nombre, password, rol} = req.body;
 
+    const hashedPassword =  hashPassword(password);
+
     const queryCrearUsuario = "INSERT INTO Usuarios (username,pass,rol) VALUES (?, ?, ?)";
 
-    connection.query(queryCrearUsuario,[nombre, password, rol], (error, results) => {
+    connection.query(queryCrearUsuario,[nombre, hashedPassword, rol], (error, results) => {
         if (error) {
             console.error("Error al crear el usuario: ", error);
             res.status(500).json({ message: "Error al crear el usuario" });
@@ -61,12 +65,14 @@ const crearUsuario = (req, res) => {
     });
 }
 
-const actualizarUsuario = (req, res) => {
+const actualizarUsuario = async (req, res) => {
     const id = req.params.id;
     const { nombre, password, rol, activo } = req.body;
 
-    const queryActualizarUsuario = "UPDATE Usuarios SET username = ?, pass = ?, rol = ?, activo = ? WHERE id = ?";
-    connection.query(queryActualizarUsuario, [nombre, password, rol, activo, id], (error, results) => {
+    const hashedPassword = await hashPassword(password);
+
+    const queryActualizarUsuario = "UPDATE Usuarios SET username = ?, pass = ?, Rol = ?, activo = ? WHERE id_usuario = ?";
+    connection.query(queryActualizarUsuario, [nombre, hashedPassword, rol, activo, id], (error, results) => {
         if (error) {
             console.error("Error al actualizar el usuario: ", error);
             res.status(500).json({ message: "Error al actualizar el usuario" });

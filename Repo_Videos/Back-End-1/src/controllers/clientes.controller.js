@@ -1,4 +1,4 @@
-const {connection} = require('../database/db');
+const {connection} = require('../config/config');
 
 //fcion que muestre todos los clientes activarUsuario
 const mostrarClientesActivos = (req, res) => {
