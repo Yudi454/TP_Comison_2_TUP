@@ -15,6 +15,8 @@ CREATE TABLE usuarios (
   fecha_alta TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+SELECT * FROM usuarios;
+
 -- Tabla de proveedores
 CREATE TABLE proveedores (
   id INT AUTO_INCREMENT PRIMARY KEY,
@@ -24,6 +26,8 @@ CREATE TABLE proveedores (
   direccion VARCHAR(150),
   fecha_alta TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+SELECT * FROM proveedores;
 
 -- Tabla de productos
 CREATE TABLE productos (

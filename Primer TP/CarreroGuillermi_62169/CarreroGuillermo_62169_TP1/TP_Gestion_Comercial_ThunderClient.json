@@ -1,0 +1,238 @@
+{
+  "client": "Thunder Client",
+  "collectionName": "TP Gestión Comercial",
+  "folders": [
+    {
+      "name": "Usuarios",
+      "requests": []
+    },
+    {
+      "name": "Proveedores",
+      "requests": []
+    },
+    {
+      "name": "Productos",
+      "requests": []
+    },
+    {
+      "name": "Ventas",
+      "requests": []
+    },
+    {
+      "name": "Métricas",
+      "requests": []
+    }
+  ],
+  "requests": [
+    {
+      "name": "GET Usuarios",
+      "url": "http://localhost:4000/api/usuarios",
+      "method": "GET",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ]
+    },
+    {
+      "name": "GET Usuario por ID",
+      "url": "http://localhost:4000/api/usuarios/1",
+      "method": "GET",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ]
+    },
+    {
+      "name": "POST Crear Usuario",
+      "url": "http://localhost:4000/api/usuarios",
+      "method": "POST",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "type": "json",
+        "raw": {
+          "nombre": "Pedro Ruiz",
+          "email": "pedro@empresa.com",
+          "rol": "empleado"
+        }
+      }
+    },
+    {
+      "name": "PUT Actualizar Usuario",
+      "url": "http://localhost:4000/api/usuarios/2",
+      "method": "PUT",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "type": "json",
+        "raw": {
+          "nombre": "María López",
+          "email": "maria@empresa.com",
+          "rol": "admin"
+        }
+      }
+    },
+    {
+      "name": "DELETE Usuario",
+      "url": "http://localhost:4000/api/usuarios/2",
+      "method": "DELETE"
+    },
+    {
+      "name": "GET Proveedores",
+      "url": "http://localhost:4000/api/proveedores",
+      "method": "GET"
+    },
+    {
+      "name": "POST Crear Proveedor",
+      "url": "http://localhost:4000/api/proveedores",
+      "method": "POST",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "type": "json",
+        "raw": {
+          "nombre": "Proveedor C",
+          "telefono": "1133557799",
+          "email": "contacto@proveedorc.com",
+          "direccion": "Av. Belgrano 789"
+        }
+      }
+    },
+    {
+      "name": "PUT Actualizar Proveedor",
+      "url": "http://localhost:4000/api/proveedores/2",
+      "method": "PUT",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "type": "json",
+        "raw": {
+          "nombre": "Proveedor B actualizado",
+          "telefono": "1199887766",
+          "email": "ventas@proveedorb.com",
+          "direccion": "Calle Rivadavia 500"
+        }
+      }
+    },
+    {
+      "name": "DELETE Proveedor",
+      "url": "http://localhost:4000/api/proveedores/2",
+      "method": "DELETE"
+    },
+    {
+      "name": "GET Productos",
+      "url": "http://localhost:4000/api/productos",
+      "method": "GET"
+    },
+    {
+      "name": "POST Crear Producto",
+      "url": "http://localhost:4000/api/productos",
+      "method": "POST",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "type": "json",
+        "raw": {
+          "nombre": "Notebook Lenovo",
+          "descripcion": "Ryzen 5 - 8GB RAM - SSD 512GB",
+          "precio": 540000,
+          "stock": 12,
+          "id_proveedor": 1
+        }
+      }
+    },
+    {
+      "name": "PUT Actualizar Producto",
+      "url": "http://localhost:4000/api/productos/2",
+      "method": "PUT",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "type": "json",
+        "raw": {
+          "nombre": "Teclado Mecánico RGB",
+          "descripcion": "Teclado retroiluminado actualizado",
+          "precio": 26000,
+          "stock": 28,
+          "id_proveedor": 2
+        }
+      }
+    },
+    {
+      "name": "DELETE Producto",
+      "url": "http://localhost:4000/api/productos/2",
+      "method": "DELETE"
+    },
+    {
+      "name": "GET Ventas",
+      "url": "http://localhost:4000/api/ventas",
+      "method": "GET"
+    },
+    {
+      "name": "POST Crear Venta",
+      "url": "http://localhost:4000/api/ventas",
+      "method": "POST",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "type": "json",
+        "raw": {
+          "id_usuario": 1,
+          "total": 120000
+        }
+      }
+    },
+    {
+      "name": "DELETE Venta",
+      "url": "http://localhost:4000/api/ventas/1",
+      "method": "DELETE"
+    },
+    {
+      "name": "GET Métricas Generales",
+      "url": "http://localhost:4000/api/metricas",
+      "method": "GET"
+    },
+    {
+      "name": "GET Top Productos",
+      "url": "http://localhost:4000/api/metricas/top-productos",
+      "method": "GET"
+    },
+    {
+      "name": "GET Ventas por Mes",
+      "url": "http://localhost:4000/api/metricas/ventas-mes",
+      "method": "GET"
+    }
+  ]
+}
