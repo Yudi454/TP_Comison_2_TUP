@@ -2,6 +2,15 @@
 CREATE SCHEMA IF NOT EXISTS biblioteca;
 USE biblioteca;
 
+--Tabla usuarios
+CREATE TABLE usuarios (
+usuario_id INT NOT NULL AUTO_INCREMENT,
+nombre_usuario varchar(50) not null,
+contraseña varchar(18) not null,
+estado_usuario tinyint(1) not null default 1,
+fecha_creacion_usuario datetime not null default current_timestamp,
+);
+
 -- Tabla libros
 CREATE TABLE libros (
     libro_id INT AUTO_INCREMENT PRIMARY KEY,
