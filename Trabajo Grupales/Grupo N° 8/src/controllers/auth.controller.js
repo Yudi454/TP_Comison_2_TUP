@@ -1,4 +1,4 @@
-const conection = require("../config/DB");
+const pool = require("../config/DB");
 const { hashPassword, comparePassword } = require("../utils/hash.utils");
 
 //Registrarse
@@ -11,8 +11,10 @@ const register = async (req, res) => {
     const consulta =
       "INSERT INTO usuarios (nombre_usuario,contraseña) VALUES (?,?)";
 
-    conection.query(consulta, [usuario, hash], (err, results) => {
+    pool.query(consulta, [usuario, hash], (err, results) => {
       if (err) {
+        console.log(err);
+
         return res.status(500).json({ message: "Error al registrarse" });
       }
 
@@ -30,7 +32,7 @@ const login = (req, res) => {
 
     const consulta = "SELECT contraseña FROM usuarios WHERE nombre_usuario = ?";
 
-    conection.query(consulta, [usuario], async (err, results) => {
+    pool.query(consulta, [usuario], async (err, results) => {
       if (err) {
         return res.status(500).json({ message: "Error al buscar el usuario" });
       }
@@ -54,7 +56,7 @@ const login = (req, res) => {
   }
 };
 
-module.export = {
+module.exports = {
   register,
   login,
 };
