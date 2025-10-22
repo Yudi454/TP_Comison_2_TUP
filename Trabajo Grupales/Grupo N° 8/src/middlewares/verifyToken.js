@@ -1,16 +1,13 @@
-const jwt = require ("jsonwebtoken") //IMPORTAMOS JWT
-const dotenv = require("dotenv") //IMPORTAMOS DOTENV PARA TRAER LAS VARIABLES DE ENTORNO
+const jwt = require("jsonwebtoken"); //IMPORTAMOS JWT
+const dotenv = require("dotenv"); //IMPORTAMOS DOTENV PARA TRAER LAS VARIABLES DE ENTORNO
 
 dotenv.config();
 
 //TRAEMOS LA VARIABLE DE ENTORNO DE .ENV
 const secretKey = process.env.JWT_SECRET;
 
-
-
 //CREAMOS LA FUNCION PARA VERIFICAR
 const verifyToken = (req, res, next) => {
-
   const authHeader = req.headers["authorization"];
 
   // VERIFICAMOS QUE EXISTA
@@ -18,20 +15,16 @@ const verifyToken = (req, res, next) => {
     return res.status(403).json({ message: "Token requerido" });
   }
 
-  if (!token) {
-    return res.status(403).json({ message: "Token no proporcionado" });
-  }
-
   try {
     // VERIFICAMOS QUE COINCIDA CON NUESTRA CLAVE SECRETA
-    const decoded = jwt.verify(token, secretKey);
+    const decoded = jwt.verify(authHeader, secretKey);
     // GUARDAMOS LOS DATOS
     req.user = decoded;
     // Y PASAMOS AL SIGUIENTE
     next();
   } catch (error) {
-    return res.status(401).json({ message: "Token inválido o expirado" }); 
+    return res.status(401).json({ message: "Token inválido o expirado" });
   }
 };
 
-module.exports= verifyToken; //EXPORTAMOS PARA USARLO EN otras partes
+module.exports = verifyToken; //EXPORTAMOS PARA USARLO EN otras partes

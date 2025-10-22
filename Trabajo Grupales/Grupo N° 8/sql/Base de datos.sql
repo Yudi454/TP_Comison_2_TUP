@@ -4,17 +4,10 @@ USE biblioteca;
 
 --Tabla usuarios
 CREATE TABLE usuarios (
-<<<<<<< HEAD
-usuario_id INT NOT NULL AUTO_INCREMENT,
-nombre_usuario varchar(50) not null,
-contraseña varchar(18) not null,
-estado_usuario tinyint(1) not null default 1,
-=======
 usuario_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 nombre_usuario varchar(50) not null,
 contraseña varchar(255) not null,
 estado_usuario tinyint() not null default 1,
->>>>>>> c3f2e39353792476e69707451f670051d3b7ea4f
 fecha_creacion_usuario datetime not null default current_timestamp,
 );
 
