@@ -34,4 +34,4 @@ const verifyToken = (req, res, next) => {
   }
 };
 
-module.exports= verifyToken; //EXPORTAMOS PARA USARLO EN DIFERENTES PARTES.
+module.exports= verifyToken; //EXPORTAMOS PARA USARLO EN otras partes
