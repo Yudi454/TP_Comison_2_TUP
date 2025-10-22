@@ -11,6 +11,7 @@ const librosRoutes = require("./src/routes/libros");
 const alumnosRoutes = require("./src/routes/alumnos");
 const prestamosRoutes = require("./src/routes/prestamos");
 const mailRoutes = require("./src/routes/mail.routes");
+const authRoutes = require("./src/routes/auth.routes");
 
 const app = express();
 app.use(cors());
@@ -21,6 +22,7 @@ app.use("/libros", librosRoutes);
 app.use("/alumnos", alumnosRoutes);
 app.use("/prestamos", prestamosRoutes);
 app.use("/mail", mailRoutes);
+app.use("/auth", authRoutes);
 
 app.get("/ping", (req, res) => {
   const db = require("./config/DB");
