@@ -5,11 +5,12 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 
 // inicializa la conexión (lee .env)
-require("./config/DB");
+require("./src/config/DB");
 
-const librosRoutes = require("./routes/libros");
-const alumnosRoutes = require("./routes/alumnos");
-const prestamosRoutes = require("./routes/prestamos");
+const librosRoutes = require("./src/routes/libros");
+const alumnosRoutes = require("./src/routes/alumnos");
+const prestamosRoutes = require("./src/routes/prestamos");
+const mailRoutes = require("./src/routes/mail.routes");
 
 const app = express();
 app.use(cors());
@@ -19,6 +20,7 @@ app.use(bodyParser.json());
 app.use("/libros", librosRoutes);
 app.use("/alumnos", alumnosRoutes);
 app.use("/prestamos", prestamosRoutes);
+app.use("/mail", mailRoutes);
 
 app.get("/ping", (req, res) => {
   const db = require("./config/DB");
