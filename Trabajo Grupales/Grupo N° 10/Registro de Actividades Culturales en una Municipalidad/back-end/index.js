@@ -4,6 +4,7 @@ const cors = require('cors');
 
 
 
+
 const app = express();
 
 app.use(cors());
@@ -15,6 +16,7 @@ app.use('/api/artistas_eventos', require('./routes/artistas_eventos.routes'));
 app.use('/api/ventas_boletos', require('./routes/ventas_boletos.routes'));
 app.use('/api/artistas', require('./routes/artistas.routes'));
 app.use('/api/lugares', require('./routes/lugares.routes'));
+app.use("/api/login/artista", require("./routes/login.routes"))
 
 // RUTA PRINCIPAL
 app.get('/', (req, res) => {
@@ -25,7 +27,7 @@ app.get('/', (req, res) => {
       artistas_eventos: '/api/artistas_eventos',
       ventas_boletos: '/api/ventas_boletos',
       artistas: '/api/artistas',
-      lugares: '/api/lugares'
+      lugares: '/api/lugares',
 
     }
   });
