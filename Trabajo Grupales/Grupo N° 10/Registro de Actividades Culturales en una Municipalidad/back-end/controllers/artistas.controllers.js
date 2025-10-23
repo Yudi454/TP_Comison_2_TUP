@@ -21,8 +21,9 @@ const getArtistasById = (req, res) => {
 }
 
 const createArtista = (req, res) => {
-    const { nombre, tipo_arte, biografia, email, telefono } = req.body;
+    const { nombre, tipo_arte, biografia, email, contra, telefono } = req.body;
     const consulta = "INSERT INTO artistas (nombre, tipo_arte, biografia, email, telefono) VALUES (?, ?, ?, ?, ?)";
+    
 
     connection.query(consulta, [nombre, tipo_arte, biografia, email, telefono], (err, results) => {
         if (err) return res.status(500).json({ error: err.message });
