@@ -6,6 +6,7 @@ import eventosRoutes from "./routes/eventosRoutes.js";
 import eventoArtistaRoutes from "./routes/eventoArtistaRoutes.js"; 
 import inscripcionesRoutes from "./routes/inscripcionesRoutes.js";
 import mailRoutes from "./routes/mailRoutes.js";
+import usuariosRoutes from "./routes/usuariosRoutes.js";
 const app = express();
 
 app.use(cors());
@@ -22,3 +23,4 @@ app.use("/api/mail", mailRoutes);
 // Puerto
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Servidor corriendo en http://localhost:${PORT}`));
+app.use("/usuarios", usuariosRoutes);
