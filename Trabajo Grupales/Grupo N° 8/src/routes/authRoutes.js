@@ -6,14 +6,19 @@ const {
   recuperarPassword,
   cambioPasswordRecuperado,
 } = require("../controllers/auth.controller");
+const {
+  registerValidator,
+  loginValidator,
+} = require("../validators/auth.validator");
+const { validate } = require("../middlewares/checkValidations");
 
 const router = express.Router();
 
 //Registro
-router.post("/register", register);
+router.post("/register", registerValidator, validate, register);
 
 //Login
-router.post("/login", login);
+router.post("/login", loginValidator, validate, login);
 
 //aca se envía el email con el link de recuperación
 router.post("/recuperar-password", recuperarPassword);

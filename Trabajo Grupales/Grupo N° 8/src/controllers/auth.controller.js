@@ -10,14 +10,14 @@ const SECRET_KEY = process.env.JWT_SECRET;
 //Registrarse
 const register = async (req, res) => {
   try {
-    const { usuario, contraseña } = req.body;
+    const { usuario, contraseña,email } = req.body;
 
     const hash = await hashPassword(contraseña);
 
     const consulta =
-      "INSERT INTO usuarios (nombre_usuario,contraseña) VALUES (?,?)";
+      "INSERT INTO usuarios (nombre_usuario,contraseña,email) VALUES (?,?,?)";
 
-    db.query(consulta, [usuario, hash], (err, results) => {
+    db.query(consulta, [usuario, hash,email], (err, results) => {
       if (err) {
         console.log(err);
 
