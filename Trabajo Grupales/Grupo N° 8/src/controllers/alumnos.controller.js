@@ -1,63 +1,91 @@
 const db = require("../config/DB");
 
 // Obtener todos los alumnos
-exports.getAll = (req, res) => {
-  db.query("SELECT * FROM alumnos", (err, rows) => {
-    if (err) return res.status(500).json(err);
-    res.json(rows);
+const getAll = (req, res) => {
+  const consulta = "SELECT * FROM alumnos";
+
+  db.query(consulta, (err, rows) => {
+    if (err) {
+      return res.status(500).json(err);
+    }
+
+    return res.json(rows);
   });
 };
 
 // Obtener un alumno por ID
-exports.getById = (req, res) => {
-  db.query(
-    "SELECT * FROM alumnos WHERE alumno_id = ?",
-    [req.params.id],
-    (err, rows) => {
-      if (err) return res.status(500).json(err);
-      if (!rows.length) return res.status(404).json({ error: "No encontrado" });
-      res.json(rows[0]);
+const getById = (req, res) => {
+  const { id } = req.params;
+
+  const consulta = "SELECT * FROM alumnos WHERE alumno_id = ?";
+
+  db.query(consulta, [id], (err, rows) => {
+    if (err) {
+      return res.status(500).json(err);
     }
-  );
+    if (!rows.length) {
+      return res.status(404).json({ error: "Alumno no encontrado" });
+    }
+    return res.json(rows[0]);
+  });
 };
 
 // Crear un nuevo alumno
-exports.create = (req, res) => {
+const create = (req, res) => {
   const { nombre, curso, dni } = req.body;
-  db.query(
-    "INSERT INTO alumnos (nombre, curso, dni) VALUES (?, ?, ?)",
-    [nombre, curso || null, dni],
-    (err, result) => {
-      if (err) return res.status(500).json(err);
-      res.status(201).json({
-        alumno_id: result.insertId,
-        nombre,
-        curso: curso || null,
-        dni
-      });
+
+  const consulta = "INSERT INTO alumnos (nombre, curso, dni) VALUES (?, ?, ?)";
+
+  db.query(consulta, [nombre, curso || null, dni], (err, result) => {
+    if (err) {
+      return res.status(500).json(err);
     }
-  );
+
+    return res.status(201).json({ message: "Alumno creado con exito" });
+  });
 };
 
 // Actualizar un alumno
-exports.update = (req, res) => {
+const update = (req, res) => {
+  const { id } = req.params;
   const { nombre, curso, dni } = req.body;
-  db.query(
-    "UPDATE alumnos SET nombre=?, curso=?, dni=? WHERE alumno_id=?",
-    [nombre, curso || null, dni, req.params.id],
-    (err, result) => {
-      if (err) return res.status(500).json(err);
-      if (result.affectedRows === 0) return res.status(404).json({ error: "No encontrado" });
-      res.json({ ok: true });
+
+  const consulta =
+    "UPDATE alumnos SET nombre=?, curso=?, dni=? WHERE alumno_id=?";
+
+  db.query(consulta, [nombre, curso || null, dni, id], (err, result) => {
+    if (err) {
+      return res.status(500).json(err);
     }
-  );
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: "Alumno no encontrado" });
+    }
+    return res.json({ message: "Alumno actualizado con exito" });
+  });
 };
 
 // Eliminar un alumno
-exports.remove = (req, res) => {
-  db.query("DELETE FROM alumnos WHERE alumno_id=?", [req.params.id], (err, result) => {
-    if (err) return res.status(500).json(err);
-    if (result.affectedRows === 0) return res.status(404).json({ error: "No encontrado" });
-    res.json({ ok: true });
+const remove = (req, res) => {
+  const { id } = req.params;
+
+  const consulta = "DELETE FROM alumnos WHERE alumno_id=?";
+
+  db.query(consulta, [id], (err, result) => {
+    if (err) {
+      return res.status(500).json(err);
+    }
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: "No encontrado" });
+    }
+
+    return res.json({ message: "Alumno eliminado con exito" });
   });
+};
+
+module.exports = {
+  getAll,
+  getById,
+  create,
+  update,
+  remove,
 };

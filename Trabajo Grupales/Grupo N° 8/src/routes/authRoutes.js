@@ -1,13 +1,24 @@
 const express = require("express");
 
-const { register, login } = require("../controllers/auth.controller");
+const {
+  register,
+  login,
+  recuperarPassword,
+  cambioPasswordRecuperado,
+} = require("../controllers/auth.controller");
 
-const router = express.Router()
+const router = express.Router();
 
 //Registro
-router.post("/register",register);
+router.post("/register", register);
 
 //Login
-router.post("/login",login)
+router.post("/login", login);
 
-module.exports = router
+//aca se envía el email con el link de recuperación
+router.post("/recuperar-password", recuperarPassword);
+
+//aca se cambia la contraseña usando el token
+router.put("/cambio_password/:token", cambioPasswordRecuperado);
+
+module.exports = router;

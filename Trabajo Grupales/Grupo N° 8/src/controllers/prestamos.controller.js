@@ -1,65 +1,113 @@
 const db = require("../config/DB");
 
 // Obtener todos los préstamos
-exports.getAll = (req, res) => {
-  db.query("SELECT * FROM prestamos", (err, rows) => {
-    if (err) return res.status(500).json(err);
-    res.json(rows);
+const getAll = (req, res) => {
+  const consulta = "SELECT * FROM prestamos";
+
+  db.query(consulta, (err, rows) => {
+    if (err) {
+      return res.status(500).json(err);
+    }
+
+    return res.json(rows);
   });
 };
 
 // Obtener un préstamo por ID
-exports.getById = (req, res) => {
-  db.query(
-    "SELECT * FROM prestamos WHERE prestamo_id = ?",
-    [req.params.id],
-    (err, rows) => {
-      if (err) return res.status(500).json(err);
-      if (!rows.length) return res.status(404).json({ error: "No encontrado" });
-      res.json(rows[0]);
+const getById = (req, res) => {
+  const { id } = req.params;
+
+  const consulta = "SELECT * FROM prestamos WHERE prestamo_id = ?";
+
+  db.query(consulta, [id], (err, rows) => {
+    if (err) {
+      return res.status(500).json(err);
     }
-  );
+
+    if (!rows.length) {
+      return res.status(404).json({ error: "Prestamo no encontrado" });
+    }
+
+    return res.json(rows[0]);
+  });
 };
 
 // Crear un nuevo préstamo
-exports.create = (req, res) => {
-  const { alumno_id, libro_id, fecha_prestamo, fecha_devolucion, estado } = req.body;
+const create = (req, res) => {
+  const { alumno_id, libro_id, fecha_prestamo, fecha_devolucion, estado } =
+    req.body;
+
+  const cosnulta =
+    "INSERT INTO prestamos (alumno_id, libro_id, fecha_prestamo, fecha_devolucion, estado) VALUES (?, ?, ?, ?, ?)";
+
   db.query(
-    "INSERT INTO prestamos (alumno_id, libro_id, fecha_prestamo, fecha_devolucion, estado) VALUES (?, ?, ?, ?, ?)",
-    [alumno_id, libro_id, fecha_prestamo, fecha_devolucion || null, estado || 'prestado'],
+    consulta,
+    [
+      alumno_id,
+      libro_id,
+      fecha_prestamo,
+      fecha_devolucion || null,
+      estado || "prestado",
+    ],
     (err, result) => {
-      if (err) return res.status(500).json(err);
-      res.status(201).json({
-        prestamo_id: result.insertId,
-        alumno_id,
-        libro_id,
-        fecha_prestamo,
-        fecha_devolucion: fecha_devolucion || null,
-        estado: estado || 'prestado'
-      });
+      if (err) {
+        return res.status(500).json(err);
+      }
+
+      return res.status(201).json({ message: "Prestamo creado con exito" });
     }
   );
 };
 
 // Actualizar un préstamo
-exports.update = (req, res) => {
-  const { alumno_id, libro_id, fecha_prestamo, fecha_devolucion, estado } = req.body;
+const update = (req, res) => {
+  const { id } = req.params;
+
+  const { alumno_id, libro_id, fecha_prestamo, fecha_devolucion, estado } =
+    req.body;
+
+  const consulta =
+    "UPDATE prestamos SET alumno_id=?, libro_id=?, fecha_prestamo=?, fecha_devolucion=?, estado=? WHERE prestamo_id=?";
+
   db.query(
-    "UPDATE prestamos SET alumno_id=?, libro_id=?, fecha_prestamo=?, fecha_devolucion=?, estado=? WHERE prestamo_id=?",
-    [alumno_id, libro_id, fecha_prestamo, fecha_devolucion || null, estado || 'prestado', req.params.id],
+    consulta,
+    [
+      alumno_id,
+      libro_id,
+      fecha_prestamo,
+      fecha_devolucion || null,
+      estado || "prestado",
+      id,
+    ],
     (err, result) => {
-      if (err) return res.status(500).json(err);
-      if (result.affectedRows === 0) return res.status(404).json({ error: "No encontrado" });
-      res.json({ ok: true });
+      if (err) {
+        return res.status(500).json(err);
+      }
+
+      if (result.affectedRows === 0) {
+        return res.status(404).json({ error: "Prestamo no encontrado" });
+      }
+
+      return res.json({ message: "Prestamo actualizado con exito" });
     }
   );
 };
 
 // Eliminar un préstamo
-exports.remove = (req, res) => {
-  db.query("DELETE FROM prestamos WHERE prestamo_id=?", [req.params.id], (err, result) => {
-    if (err) return res.status(500).json(err);
-    if (result.affectedRows === 0) return res.status(404).json({ error: "No encontrado" });
-    res.json({ ok: true });
+const remove = (req, res) => {
+  const { id } = req.params;
+
+  const consulta = "DELETE FROM prestamos WHERE prestamo_id=?";
+
+  db.query(consulta, [id], (err, result) => {
+    if (err) {
+      return res.status(500).json(err);
+    }
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: "Prestamo no encontrado" });
+    }
+
+    return res.json({ message: "Prestamo eliminado con exito" });
   });
 };
