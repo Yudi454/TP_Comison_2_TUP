@@ -1,19 +1,22 @@
 const express = require('express');
+const cors = require('cors');
+require('dotenv').config();
 
 const clienteRoutes = require('./routes/clienteRoutes');
-const productoRoutes = require('./routes/productoRoutes');
-const ventaRoutes = require('./routes/ventaRoutes');
-
+const servicioRoutes = require('./routes/servicioRoutes');
+const pagoRoutes = require('./routes/pagoRoutes');
 
 const app = express();
 
-
+app.use(cors());
 app.use(express.json());
 
-app.use('/clientes', clienteRoutes);
-app.use('/productos', productoRoutes);
-app.use('/ventas', ventaRoutes);
+app.use('/api/clientes', clienteRoutes);
+app.use('/api/servicios', servicioRoutes);
+app.use('/api', pagoRoutes); 
 
-app.listen(8000, () => {
-  console.log('Servidor corriendo en puerto 8000');
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log(`Servidor corriendo en el puerto ${PORT}`);
 });
