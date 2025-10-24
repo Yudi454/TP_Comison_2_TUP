@@ -1,41 +1,23 @@
-require("dotenv").config()
-const express = require('express');
-const { conection } = require('./config/database');
-const routesSocios = require("./routes/socios.routes")
-const routesActivades = require("./routes/actividades.routes")
-const routesReservas = require("./routes/routes.reservas")
-const cors = require('cors');
+// index.js
+require("dotenv").config();
+const express = require("express");
+const cors = require("cors");
+const { conection } = require("./config/DB");  // 🔹 Acá la llamás
+
 const app = express();
 
-app.use(cors())
+app.use(cors());
 app.use(express.json());
 
-
 // Rutas
-app.get('/', (req, res) => {
-    res.send('Bienvenido a GymCode');
-});
-app.use("/",routesSocios)
-app.use("/",routesActivades)
-app.use("/",routesReservas)
+const rutasActividades = require("./routes/actividades.routes");
+const rutasReservas = require("./routes/routes.reservas");
+const rutasSocios = require("./routes/socios.routes");
 
-// Conexión a la base de datos
-conection.connect((err) => {
-    if (err) {
-        console.error('Error al conectar a la base de datos:', err);
-    } else {
-        console.log('Conexión a la base de datos exitosa');
-    }
-});
+app.use("/api/actividades", rutasActividades);
+app.use("/api/reservas", rutasReservas);
+app.use("/api/socios", rutasSocios);
 
-
-// Puerto del servidor
-const PORT = process.env.PORT;
-
-app.listen(PORT,(err) =>{
-    if (err) {
-        console.error('Error al iniciar el servidor:', err);
-    } else {
-        console.log('Servidor corriendo en el puerto ' + PORT);
-    }
-});
+// Puerto
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`🚀 Servidor corriendo en puerto ${PORT}`));

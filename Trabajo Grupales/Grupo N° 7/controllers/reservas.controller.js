@@ -1,4 +1,4 @@
-const { conection } = require("../DB")
+const { conection } = require("../config/DB")
 
 // Mostrar todas las reservas
 const getReservas = (req, res) => {
