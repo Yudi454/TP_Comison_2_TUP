@@ -1,27 +1,17 @@
-const db = require('../config/db'); 
+const pool = require('../config/db');
 
-exports.getClientes = (req, res) => {
-  db.query('SELECT * FROM clientes', (err, results) => { 
-    if (err) {
-      console.error('Error al obtener clientes:', err);
-      return res.status(500).json({ error: 'Error al obtener clientes' });
-    }
-    res.json(results);
-  });
-};
-
-exports.createCliente = (req, res) => {
-  const { nombre, telefono, mail } = req.body;
-
-  db.query(
-    'INSERT INTO clientes (nombre, telefono, mail) VALUES (?, ?, ?)',
-    [nombre, telefono, mail],
-    (err, result) => {
-      if (err) {
-        console.error('Error al crear cliente:', err);
-        return res.status(500).json({ error: 'Error al crear cliente' });
-      }
-      res.json({ id: result.insertId, nombre, telefono, mail });
-    }
-  );
+exports.crearCliente = async (req, res) => {
+  const { nombre, apellido, email } = req.body;
+  if (!nombre || !apellido || !email) {
+    return res.status(400).json({ error: 'Todos los campos son obligatorios' });
+  }
+  try {
+    const [result] = await pool.query(
+      'INSERT INTO clientes (nombre, apellido, email) VALUES (?, ?, ?)',
+      [nombre, apellido, email]
+    );
+    res.status(201).json({ id: result.insertId, nombre, apellido, email });
+  } catch (error) {
+    res.status(500).json({ error: 'Error al crear el cliente', details: error.message });
+  }
 };
