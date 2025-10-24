@@ -11,7 +11,7 @@ const librosRoutes = require("./src/routes/libros");
 const alumnosRoutes = require("./src/routes/alumnos");
 const prestamosRoutes = require("./src/routes/prestamos");
 const mailRoutes = require("./src/routes/mail.routes");
-const authRoutes = require("./src/routes/auth.routes");
+const authRoutes = require("./src/routes/authRoutes")
 
 const app = express();
 app.use(cors());
