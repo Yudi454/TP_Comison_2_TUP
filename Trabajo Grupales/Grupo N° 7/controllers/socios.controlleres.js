@@ -108,7 +108,6 @@ const loginSocio = (req, res) => {
 
   console.log("Login request body:", req.body); 
 
-  // Buscar usuario por email
   const sql = "SELECT * FROM socios WHERE emailSocio = ?";
   conection.query(sql, [email], async (err, results) => {
     if (err) {

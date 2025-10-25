@@ -1,6 +1,6 @@
 const nodemailer = require('nodemailer');
 
-// Configuración del transporter
+
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
@@ -9,7 +9,6 @@ const transporter = nodemailer.createTransport({
   }
 });
 
-// Función para enviar mail de recuperación
 function enviarCorreo(email, nombre, link, callback) {
   const mailOptions = {
     from: `"Gimnasio Grupo 7" <${process.env.MAIL_USER}>`,
