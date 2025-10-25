@@ -5,7 +5,7 @@ const {getActividades, CreateAtividades, updateActividades, deleteActividades} =
 
 
 router.get("/", getActividades)
-router.post("/", CreateAtividades)
+router.post("/crear", CreateAtividades)
 router.put("/:id", updateActividades)
 router.delete("/:id", deleteActividades)
 

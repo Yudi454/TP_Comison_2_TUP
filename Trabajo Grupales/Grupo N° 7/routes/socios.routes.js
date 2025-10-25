@@ -1,13 +1,15 @@
 const Router = require("express")
 const router = Router();
-const {getSocios, getSocio, createSocio, updateSocio, darBajaSocio, reactivarSocio} = require("../controllers/socios.controlleres");
+const {getSocios, getSocio, createSocio, updateSocio, darBajaSocio, reactivarSocio, loginSocio, recuperarPassword } = require("../controllers/socios.controlleres");
 
 
-router.get("/socios",getSocios);
-router.get("/socios/:id", getSocio);
-router.post("/socios/crear", createSocio);
-router.put("/socios/actualizar/:id",updateSocio);
-router.put("/socios/darBaja/:id",darBajaSocio);
-router.put("/socios/reactivar/:id",reactivarSocio);
+router.get("/",getSocios);
+router.get("/:id", getSocio);
+router.post("/crear", createSocio);
+router.put("/actualizar/:id",updateSocio);
+router.put("/darBaja/:id",darBajaSocio);
+router.put("/reactivar/:id",reactivarSocio);
+router.post('/login', loginSocio);
+router.post('/recuperar', recuperarPassword);
 
 module.exports= router

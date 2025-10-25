@@ -1,5 +1,8 @@
 const { conection } = require("../config/DB");
 const brcyptjs = require("bcryptjs")
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
+const { enviarCorreo } = require('../config/mailer');
 
 const getSocios = (req, res)=>{
     const consulta = "select * from socios"
@@ -88,11 +91,56 @@ const reactivarSocio = (req, res)=>{
     })
 }
 
+
+ 
+
+const loginSocio = (req, res) => {
+    const { emailSocio, contraSocio } = req.body;
+    const consulta = "SELECT * FROM socios WHERE emailSocio = ?";
+
+    conection.query(consulta, [emailSocio], (err, results) => {
+        if (err) return res.status(500).json({ error: "Error al buscar el usuario" });
+        if (results.length === 0) return res.status(404).json({ error: "Usuario no encontrado" });
+
+        const socio = results[0];
+
+        brcyptjs.compare(contraSocio, socio.contraSocio, (err, isMatch) => {
+            if (err) return res.status(500).json({ error: "Error al comparar contraseña" });
+            if (!isMatch) return res.status(400).json({ error: "Contraseña incorrecta" });
+
+            const token = jwt.sign({ id: socio.idSocio, email: socio.emailSocio }, process.env.JWT_SECRET, { expiresIn: '1h' });
+
+            res.json({ message: "Login exitoso", token });
+        });
+    });
+}
+
+const recuperarPassword = (req, res) => {
+    const { emailSocio } = req.body;
+    const consulta = "SELECT * FROM socios WHERE emailSocio = ?";
+
+    conection.query(consulta, [emailSocio], (err, results) => {
+        if (err) return res.status(500).json({ error: "Error al buscar usuario" });
+        if (results.length === 0) return res.status(404).json({ error: "Usuario no encontrado" });
+
+        const socio = results[0];
+        const link = `http://localhost:3000/reset/${socio.idSocio}-${Date.now()}`; // link temporal de ejemplo
+
+        enviarCorreo(emailSocio, socio.nombreSocio, link, (err, info) => {
+            if (err) return res.status(500).json({ error: "Error al enviar correo" });
+            res.json({ message: "Correo de recuperación enviado correctamente" });
+        });
+    });
+}
+
+
 module.exports ={
     getSocios,
     getSocio,
     createSocio,
     updateSocio,
     darBajaSocio,
-    reactivarSocio
+    reactivarSocio,
+    loginSocio,
+    recuperarPassword
 } 
