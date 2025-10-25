@@ -18,6 +18,7 @@ app.use('/api/ventas_boletos', require('./routes/ventas_boletos.routes'));
 app.use('/api/artistas', require('./routes/artistas.routes'));
 app.use('/api/lugares', require('./routes/lugares.routes'));
 app.use("/api/login/artista", require("./routes/login.routes"))
+app.use("/api/auth", authRouter);
 
 // RUTA PRINCIPAL
 app.get('/', (req, res) => {
