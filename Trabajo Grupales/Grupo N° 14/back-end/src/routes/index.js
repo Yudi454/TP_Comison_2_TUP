@@ -1,7 +1,7 @@
 import express from "express";
 
 // Importar todas las rutas
-import artistasRoutes from "./artistaRoutes.js";
+import artistasRoutes from "./artistasRoutes.js";
 import asistentesRoutes from "./asistentesRoutes.js";
 import eventoArtistaRoutes from "./eventoArtistaRoutes.js";
 import eventosRoutes from "./eventosRoutes.js";
