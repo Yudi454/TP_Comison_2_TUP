@@ -1,5 +1,6 @@
 const { conection } = require("../config/DB");
-const brcyptjs = require("bcryptjs")
+const bcrypt = require("bcryptjs"); 
+
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 const { enviarCorreo } = require('../config/mailer');
@@ -29,22 +30,29 @@ const getSocio = (req, res) =>{
     })
 }
 
-const createSocio = async (req, res)=>{
-    const {nombreSocio, apellidoSocio, emailSocio, contraSocio} = req.body;
 
-    let salt = await brcyptjs.genSalt(10);
-    let contraEncrip = await brcyptjs.hash(contraSocio, salt);
+const createSocio = async (req, res) => {
+    const { nombreSocio, apellidoSocio, emailSocio, contraSocio } = req.body;
 
-    const consulta = "insert into socios (nombreSocio, apellidoSocio, emailSocio, contraSocio) values (?,?,?,?)";
-    
-    conection.query(consulta,[nombreSocio, apellidoSocio, emailSocio, contraEncrip],(err, result)=>{
-        if(err){
-            console.log("Error al crear Socio",err)
-            return res.status(500).json({error:"Error al crear Socio"})
-        }
-        res.status(201).json({message:"Socio creado con exito"})
-    })
-}
+    try {
+        let salt = await bcrypt.genSalt(10);
+        let contraEncrip = await bcrypt.hash(contraSocio, salt);
+
+        const consulta = "INSERT INTO socios (nombreSocio, apellidoSocio, emailSocio, contraSocio) VALUES (?,?,?,?)";
+        
+        conection.query(consulta, [nombreSocio, apellidoSocio, emailSocio, contraEncrip], (err, result) => {
+            if (err) {
+                console.log("Error al crear Socio", err);
+                return res.status(500).json({ error: "Error al crear Socio" });
+            }
+            res.status(201).json({ message: "Socio creado con exito" });
+        });
+    } catch (error) {
+        console.log("Error interno al crear socio", error);
+        res.status(500).json({ error: "Error interno del servidor" });
+    }
+};
+
 
 const updateSocio = async (req,res) =>{
     const id = req.params.id
@@ -94,26 +102,47 @@ const reactivarSocio = (req, res)=>{
 
  
 
+
 const loginSocio = (req, res) => {
-    const { emailSocio, contraSocio } = req.body;
-    const consulta = "SELECT * FROM socios WHERE emailSocio = ?";
+  const { email, password } = req.body;
 
-    conection.query(consulta, [emailSocio], (err, results) => {
-        if (err) return res.status(500).json({ error: "Error al buscar el usuario" });
-        if (results.length === 0) return res.status(404).json({ error: "Usuario no encontrado" });
+  console.log("Login request body:", req.body); 
 
-        const socio = results[0];
+  // Buscar usuario por email
+  const sql = "SELECT * FROM socios WHERE emailSocio = ?";
+  conection.query(sql, [email], async (err, results) => {
+    if (err) {
+      console.error("Error al consultar la base de datos:", err); 
+      return res.status(500).json({ error: "Error en el servidor" });
+    }
 
-        brcyptjs.compare(contraSocio, socio.contraSocio, (err, isMatch) => {
-            if (err) return res.status(500).json({ error: "Error al comparar contraseña" });
-            if (!isMatch) return res.status(400).json({ error: "Contraseña incorrecta" });
+    console.log("Resultados de la query:", results); 
 
-            const token = jwt.sign({ id: socio.idSocio, email: socio.emailSocio }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    if (results.length === 0) {
+      return res.status(404).json({ error: "Usuario no encontrado" });
+    }
 
-            res.json({ message: "Login exitoso", token });
-        });
+    const usuario = results[0];
+
+   
+    const passwordValida = await bcrypt.compare(password, usuario.contraSocio);
+
+    if (!passwordValida) {
+      console.log("Contraseña incorrecta para usuario:", usuario.emailSocio);
+      return res.status(401).json({ error: "Contraseña incorrecta" });
+    }
+
+    
+    const token = jwt.sign({ id: usuario.idSocio, email: usuario.emailSocio }, process.env.JWT_SECRET, {
+      expiresIn: "1h",
     });
-}
+
+    console.log("Login exitoso, token generado para:", usuario.emailSocio); 
+
+    res.json({ token });
+  });
+};
+
 
 const recuperarPassword = (req, res) => {
     const { emailSocio } = req.body;
@@ -124,7 +153,7 @@ const recuperarPassword = (req, res) => {
         if (results.length === 0) return res.status(404).json({ error: "Usuario no encontrado" });
 
         const socio = results[0];
-        const link = `http://localhost:3000/reset/${socio.idSocio}-${Date.now()}`; // link temporal de ejemplo
+        const link = `http://localhost:3000/reset/${socio.idSocio}-${Date.now()}`; 
 
         enviarCorreo(emailSocio, socio.nombreSocio, link, (err, info) => {
             if (err) return res.status(500).json({ error: "Error al enviar correo" });
