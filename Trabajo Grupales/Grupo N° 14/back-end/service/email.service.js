@@ -21,3 +21,12 @@ export const enviarMailTest = async (to) => {
     html: '<b>Hola, este es un email de prueba enviado desde Node.js usando Nodemailer.</b>'
   });
 };
+
+export const sendMail = async ({ to, subject, html }) => {
+  return transporter.sendMail({
+    from: `"Soporte" <${process.env.SMTP_USER}>`,
+    to,
+    subject,
+    html
+  });
+};
