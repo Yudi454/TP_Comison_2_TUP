@@ -1,5 +1,6 @@
 const db = require("../config/DB");
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 
 const { enviarEmailRecuperacion } = require("../services/email.service");
 const { hashPassword, comparePassword } = require("../utils/hash.utils");
@@ -10,14 +11,14 @@ const SECRET_KEY = process.env.JWT_SECRET;
 //Registrarse
 const register = async (req, res) => {
   try {
-    const { usuario, contraseña,email } = req.body;
+    const { usuario, contraseña, email } = req.body;
 
     const hash = await hashPassword(contraseña);
 
     const consulta =
       "INSERT INTO usuarios (nombre_usuario,contraseña,email) VALUES (?,?,?)";
 
-    db.query(consulta, [usuario, hash,email], (err, results) => {
+    db.query(consulta, [usuario, hash, email], (err, results) => {
       if (err) {
         console.log(err);
 
@@ -53,7 +54,7 @@ const login = (req, res) => {
       const id_usuario = results[0].usuario_id;
       const hash = results[0].contraseña;
 
-      const esValida = await comparePassword(contraseña, hash);
+      const esValida = await comparePassword(String(contraseña), String(hash));
 
       if (!esValida) {
         return res.status(401).json({ message: "Contraseña incorrecta " });
@@ -91,37 +92,49 @@ const recuperarPassword = async (req, res) => {
     const usuario = result[0];
 
     const token = jwt.sign(
-      { id: usuario.id_usuario, email: usuario.email },
+      { id: usuario.usuario_id, email: usuario.email },
       process.env.JWT_SECRET,
       { expiresIn: "15m" }
     );
     // generamos un token JWT con el id y email del usuario, con expiración de 15 minutos
 
-    const link = `http://localhost:3000/cambio_contraseña/${token}`; // link de recuperación de contraseña
+    const link = `http://localhost:3000/auth/cambio_password/${token}`; // link de recuperación de contraseña
     await enviarEmailRecuperacion(mail, link); // enviamos el email de recuperación
 
     res.status(200).json({ message: "Email de recuperación enviado" }); // respondemos que el email fue enviado
   });
 };
 
-// Controlador para cambiar la contraseña usando el token de recuperación
 const cambioPasswordRecuperado = async (req, res) => {
-  const { token } = req.params; // recuperamos el token de los parámetros de la URL
-  const { newPassword } = req.body; // recuperamos la nueva contraseña del body
+  try {
+    const { token } = req.params;
+    const { newPassword } = req.body;
 
-  const decoded = jwt.verify(token, process.env.JWT_SECRET); // verificamos y decodificamos el token
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    console.log(decoded);
 
-  const consulta = "UPDATE usuarios SET contraseña = ? WHERE usuario_id = ?"; // consulta para actualizar la contraseña
+    // Hashear la nueva contraseña
+    const hashedPassword = await bcrypt.hash(String(newPassword), 10);
 
-  db.query(consulta, [newPassword, decoded.id], (err, result) => {
-    if (err)
-      return res.status(500).json({ message: "Error en el servidor", err });
+    const consulta = "UPDATE usuarios SET contraseña = ? WHERE usuario_id = ?";
 
-    if (result.length === 0)
-      return res.status(404).json({ message: "Usuario no encontrado" });
+    db.query(consulta, [hashedPassword, decoded.id], (err, result) => {
+      if (err)
+        return res.status(500).json({ message: "Error en el servidor", err });
 
-    res.status(200).json({ message: "Contraseña actualizada correctamente" });
-  });
+      if (result.affectedRows === 0)
+        // para UPDATE se usa affectedRows
+        return res.status(404).json({ message: "Usuario no encontrado" });
+
+      res.status(200).json({ message: "Contraseña actualizada correctamente" });
+    });
+  } catch (error) {
+    res.status(400).json({
+      message: "Token inválido o expirado",
+      name: error?.name,
+      message: error?.message,
+    });
+  }
 };
 
 module.exports = {

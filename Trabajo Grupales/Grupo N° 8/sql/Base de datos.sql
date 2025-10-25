@@ -2,7 +2,7 @@
 CREATE SCHEMA IF NOT EXISTS biblioteca;
 USE biblioteca;
 
---Tabla usuarios
+-- Tabla usuarios
 create table usuarios (
 	usuario_id int auto_increment primary key,
     nombre_usuario varchar(50) not null,

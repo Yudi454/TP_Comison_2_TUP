@@ -1,21 +1,25 @@
 const express = require("express");
-const ctrl = require("../controllers/alumnos.controller");
+const {getAll,
+  getById,
+  create,
+  update,
+  remove} = require("../controllers/alumnos.controller");
 const verifyToken = require("../middlewares/verifyToken");
 const router = express.Router();
 
 //Traer todos los alumnos
-router.get("/", verifyToken, ctrl.getAll);
+router.get("/", verifyToken, getAll);
 
 //Traer un alumno
-router.get("/:id", verifyToken, ctrl.getById);
+router.get("/:id", verifyToken, getById);
 
 //Crear un alumno
-router.post("/", verifyToken, ctrl.create);
+router.post("/", verifyToken, create);
 
 //Editar un alumno
-router.put("/:id", verifyToken, ctrl.update);
+router.put("/:id", verifyToken, update);
 
 //Eliminar un alumno
-router.delete("/:id", verifyToken, ctrl.remove);
+router.delete("/:id", verifyToken, remove);
 
 module.exports = router;

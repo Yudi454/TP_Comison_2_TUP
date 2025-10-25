@@ -37,7 +37,7 @@ const create = (req, res) => {
   const { alumno_id, libro_id, fecha_prestamo, fecha_devolucion, estado } =
     req.body;
 
-  const cosnulta =
+  const consulta =
     "INSERT INTO prestamos (alumno_id, libro_id, fecha_prestamo, fecha_devolucion, estado) VALUES (?, ?, ?, ?, ?)";
 
   db.query(
@@ -51,7 +51,7 @@ const create = (req, res) => {
     ],
     (err, result) => {
       if (err) {
-        return res.status(500).json(err);
+        return res.status(500).json({message: err});
       }
 
       return res.status(201).json({ message: "Prestamo creado con exito" });
@@ -111,3 +111,11 @@ const remove = (req, res) => {
     return res.json({ message: "Prestamo eliminado con exito" });
   });
 };
+
+module.exports = {
+  getAll,
+  getById,
+  create,
+  update,
+  remove
+}

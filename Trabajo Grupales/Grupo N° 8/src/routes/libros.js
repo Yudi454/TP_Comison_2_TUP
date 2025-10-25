@@ -1,21 +1,25 @@
 const express = require("express");
-const ctrl = require("../controllers/libros.controller");
+const {getAll,
+  getById,
+  create,
+  update,
+  remove} = require("../controllers/libros.controller");
 const verifyToken = require("../middlewares/verifyToken");
 const router = express.Router();
 
 //Traer todos los libros
-router.get("/", verifyToken, ctrl.getAll);
+router.get("/", verifyToken, getAll);
 
 //Traer un libro
-router.get("/:id", verifyToken, ctrl.getById);
+router.get("/:id", verifyToken, getById);
 
 //Crear un libro
-router.post("/", verifyToken, ctrl.create);
+router.post("/", verifyToken, create);
 
 //Editar un libro
-router.put("/:id", verifyToken, ctrl.update);
+router.put("/:id", verifyToken, update);
 
 //Eliminar un libro
-router.delete("/:id", verifyToken, ctrl.remove);
+router.delete("/:id", verifyToken, remove);
 
 module.exports = router;
