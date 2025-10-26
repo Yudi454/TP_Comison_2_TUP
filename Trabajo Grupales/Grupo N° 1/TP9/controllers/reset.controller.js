@@ -3,7 +3,7 @@ const crypto = require("crypto");
 const bcrypt = require("bcrypt");
 const poolCb = require("../config/DB"); // pool callback-based
 const pool = poolCb.promise ? poolCb.promise() : poolCb; // wrapper promesa
-const { sendMail } = require("../config/mailer");
+const { sendMail } = require("../services/email.service");
 
 const EXP_MIN = Number(process.env.RESET_TOKEN_EXP_MIN || 60);
 const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:5173";
