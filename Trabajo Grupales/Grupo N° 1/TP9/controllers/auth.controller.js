@@ -1,64 +1,87 @@
-// Importamos jsonwebtoken para manejar los tokens JWT
+// controllers/auth.controller.js
 const jwt = require("jsonwebtoken");
-const pool = require("../config/database"); // Importamos el pool en lugar de conection
+const bcrypt = require("bcrypt");
+const poolCb = require("../config/DB"); // pool callback
+const pool = poolCb.promise ? poolCb.promise() : poolCb;
 
-// Tomamos la clave secreta desde variables de entorno
-const JWT_SECRET = process.env.JWT_SECRET;
-
-// Función para autenticar el login
-const authLogin = (req, res) => {
-  const { email, password } = req.body;
-
-  // Validamos que estén ambos campos
-  if (!email || !password) {
-    return res.status(400).json({ message: "Faltan email o contraseña" });
-  }
-
-  // Consulta SQL
-  const consulta = "SELECT * FROM usuarios WHERE correo = ? LIMIT 1";
-
-  // Usamos el pool para hacer la consulta
-  pool.query(consulta, [email], (err, results) => {
-    if (err) {
-      console.error("Error en la consulta:", err);
-      return res.status(500).json({ message: "Error en la consulta", error: err });
-    }
-
-    // Si no encontró ningún usuario
-    if (results.length === 0) {
-      return res.status(401).json({ message: "Usuario no encontrado" });
-    }
-
-    const usuario = results[0];
-
-    // Verificamos contraseña (no encriptada)
-    if (password !== usuario.contrasena) {
-      return res.status(401).json({ message: "Contraseña incorrecta" });
-    }
-
-    // Generamos token JWT con datos del usuario
-    const token = jwt.sign(
-      {
-        id: usuario.usuario_id,
-        nombre: usuario.nombre,
-        email: usuario.correo,
-        rol: usuario.rol,
-      },
-      JWT_SECRET,
-      { expiresIn: "6h" } // opcional, por seguridad
-    );
-
-    // Respondemos con el token y los datos
-    return res.status(200).json({
-      token,
-      usuario_id: usuario.usuario_id,
-      nombre: usuario.nombre,
-      apellido: usuario.apellido,
-      correo: usuario.correo,
-      rol: usuario.rol,
-    });
+function signToken(payload) {
+  return jwt.sign(payload, process.env.JWT_SECRET || "dev-secret", {
+    expiresIn: "12h",
   });
-};
+}
 
-// Exportamos la función
-module.exports = { authLogin };
+exports.authLogin = async (req, res) => {
+  try {
+    const { email, password } = req.body || {};
+    if (!email || !password) {
+      return res
+        .status(400)
+        .json({ ok: false, msg: "Email y password son requeridos" });
+    }
+
+    // 1) Intentar como socio (bcrypt obligado)
+    const [socios] = await pool.query(
+      "SELECT id, email, password FROM socios WHERE email = ?",
+      [email]
+    );
+    if (socios.length) {
+      const socio = socios[0];
+      const ok = await bcrypt.compare(password, socio.password);
+      if (!ok)
+        return res
+          .status(401)
+          .json({ ok: false, msg: "Credenciales inválidas" });
+
+      const token = signToken({
+        user_type: "socio",
+        id: socio.id,
+        email: socio.email,
+      });
+      return res.json({
+        ok: true,
+        user_type: "socio",
+        token,
+      });
+    }
+
+    // 2) Intentar como usuario staff (admin/operador)
+    const [usuarios] = await pool.query(
+      "SELECT usuario_id, correo, contrasena, password_hash, rol FROM usuarios WHERE correo = ?",
+      [email]
+    );
+    if (!usuarios.length) {
+      return res.status(401).json({ ok: false, msg: "Credenciales inválidas" });
+    }
+
+    const u = usuarios[0];
+    let valid = false;
+
+    if (u.password_hash && u.password_hash.length > 0) {
+      // Ya migrado a bcrypt
+      valid = await bcrypt.compare(password, u.password_hash);
+    } else {
+      // Aún en texto plano (compatibilidad)
+      valid = password === u.contrasena;
+    }
+
+    if (!valid)
+      return res.status(401).json({ ok: false, msg: "Credenciales inválidas" });
+
+    const token = signToken({
+      user_type: "usuario",
+      id: u.usuario_id,
+      email: u.correo,
+      rol: u.rol || "admin",
+    });
+
+    res.json({
+      ok: true,
+      user_type: "usuario",
+      rol: u.rol || "admin",
+      token,
+    });
+  } catch (err) {
+    console.error("authLogin error", err);
+    res.status(500).json({ ok: false, msg: "Error interno" });
+  }
+};
