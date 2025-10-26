@@ -1,14 +1,17 @@
-// Importamos express para usar el router
+// routes/auth.routes.js
 const express = require("express");
-
-// Creamos una instancia del router
 const router = express.Router();
 
-// Importamos la función que maneja la lógica del login
-const { authLogin } = require("../controllers/auth.controller"); 
+const { authLogin } = require("../controllers/auth.controller");
+const resetController = require("../controllers/reset.controller");
 
-// Ruta para hacer login y obtener el token JWT
+// Login (JWT)
 router.post("/login", authLogin);
 
-// Exportamos el router para usarlo en la app principal (app.js o index.js)
+// Reset password: pedir token por mail
+router.post("/reset/request", resetController.requestReset);
+
+// Reset password: confirmar con token y nueva pass
+router.post("/reset/confirm", resetController.confirmReset);
+
 module.exports = router;
