@@ -1,4 +1,5 @@
 const pool = require('../config/DB');
+const verificarToken = require("../middlewares/authMiddleware");
 
 // Obtener todos los socios
 exports.getAll = (req, res) => {
