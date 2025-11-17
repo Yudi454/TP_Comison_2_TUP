@@ -1,0 +1,37 @@
+/* Artistas page */
+.artistas-page {
+    padding: 18px;
+}
+
+.artistas-table th,
+.artistas-table td {
+    vertical-align: middle;
+}
+
+.artistas-table td {
+    word-break: break-word;
+}
+
+.artistas-page h3 {
+    margin: 0;
+    font-weight: 600;
+}
+
+/* Modal tweaks */
+.modal-body .form-control {
+    border-radius: 6px;
+}
+
+/* Buttons spacing */
+.artistas-page .btn+.btn {
+    margin-left: 6px;
+}
+
+/* Responsive */
+@media (max-width: 576px) {
+
+    .artistas-table th,
+    .artistas-table td {
+        font-size: 0.9rem;
+    }
+}

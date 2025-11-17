@@ -59,6 +59,8 @@ const obtenerPorEvento = async (req, res) => {
 //Crear una venta (controla cupos disponibles)
 
 const crearVenta = async (req, res) => {
+  console.log("Entre en crear venta");
+  
   try {
     const { id_evento, id_usuario, cantidad_boletos, metodo_pago } = req.body;
     const cantidad = Number(cantidad_boletos);

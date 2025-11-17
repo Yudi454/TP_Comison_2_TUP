@@ -1,0 +1,38 @@
+/* Ventas page */
+.ventas-page {
+    padding: 18px;
+}
+
+.ventas-page h3 {
+    margin: 0;
+    font-weight: 600;
+}
+
+/* Tabla */
+.ventas-table th,
+.ventas-table td {
+    vertical-align: middle;
+}
+
+.ventas-table td {
+    word-break: break-word;
+}
+
+/* Modal tweaks */
+.modal-body .form-control {
+    border-radius: 6px;
+}
+
+/* Buttons spacing */
+.ventas-page .btn+.btn {
+    margin-left: 6px;
+}
+
+/* Responsive */
+@media (max-width: 576px) {
+
+    .ventas-table th,
+    .ventas-table td {
+        font-size: 0.9rem;
+    }
+}

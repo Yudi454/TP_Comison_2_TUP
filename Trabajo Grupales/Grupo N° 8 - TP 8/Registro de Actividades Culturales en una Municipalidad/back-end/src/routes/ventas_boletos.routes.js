@@ -41,7 +41,7 @@ router.get(
 );
 
 // Crear venta (usa validaciones y devuelve mensaje)
-router.post("/", verifyToken, crearVentaValidation, validateInput, crearVenta);
+router.post("/create", verifyToken, crearVentaValidation, validateInput, crearVenta);
 
 // Totales por todos los eventos
 router.get("/totales/por-eventos", verifyToken, totalVentasPorEventos);

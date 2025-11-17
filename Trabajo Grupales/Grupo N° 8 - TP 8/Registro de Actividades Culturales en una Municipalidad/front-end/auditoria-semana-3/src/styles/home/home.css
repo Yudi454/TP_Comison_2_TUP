@@ -1,0 +1,75 @@
+/* Home / Dashboard styles */
+.home-container {
+    padding: 20px 12px;
+}
+
+.home-title {
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+/* Card */
+.home-card {
+    border-radius: 12px;
+    cursor: pointer;
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+    display: flex;
+    flex-direction: column;
+    min-height: 150px;
+}
+
+.home-card:focus {
+    outline: 0;
+    box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.15);
+}
+
+.home-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+}
+
+/* Icon / fallback circle */
+.home-card-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.home-card-fallback {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #e9ecef;
+    color: #495057;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+/* Text */
+.home-card-title {
+    font-size: 1.05rem;
+    margin: 0;
+}
+
+.home-card-subtitle {
+    color: #6c757d;
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+/* Responsive tweaks */
+@media (max-width: 576px) {
+    .home-card {
+        min-height: 120px;
+        border-radius: 10px;
+    }
+
+    .home-card-fallback {
+        width: 44px;
+        height: 44px;
+    }
+}

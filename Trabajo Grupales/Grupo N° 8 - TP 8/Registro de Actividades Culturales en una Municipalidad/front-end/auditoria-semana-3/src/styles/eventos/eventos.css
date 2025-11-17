@@ -1,0 +1,36 @@
+.eventos-page {
+    padding: 18px;
+}
+
+.eventos-table th,
+.eventos-table td {
+    vertical-align: middle;
+}
+
+.eventos-table td {
+    word-break: break-word;
+}
+
+.eventos-page h3 {
+    margin: 0;
+    font-weight: 600;
+}
+
+/* Modal tweaks */
+.modal-body .form-control {
+    border-radius: 6px;
+}
+
+/* Buttons spacing */
+.eventos-page .btn+.btn {
+    margin-left: 6px;
+}
+
+/* Responsive */
+@media (max-width: 576px) {
+
+    .eventos-table th,
+    .eventos-table td {
+        font-size: 0.9rem;
+    }
+}

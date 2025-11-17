@@ -34,10 +34,7 @@ const recover = async (req, res) => {
       expiresIn: "1d",
     });
 
-    console.log(token);
-    
-
-    const link = `http://localhost:3000/api/password/reset/${token}`;
+    const link = `http://localhost:5173/resetearCotrasena/${token}`;
 
     // Enviar correo con el link
     await enviarReuperacionPassword(email, link);

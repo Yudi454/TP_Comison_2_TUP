@@ -31,9 +31,8 @@ const crearArtistaValidation = [
     .withMessage("La contraseña debe tener al menos 6 caracteres"),
 
   body("telefono_artista")
-    .optional()
-    .isMobilePhone("es-AR")
-    .withMessage("El teléfono debe ser válido (Argentina)"),
+    .notEmpty()
+    .withMessage("El telefono es obligatorio"),
 ];
 
 const actualizarArtistaValidation = [

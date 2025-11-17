@@ -35,8 +35,6 @@ router.get(
 router.get(
   "/evento/:id_evento",
   verifyToken,
-  idArtista,
-  validateInput,
   obtenerPorEvento
 );
 
@@ -59,6 +57,6 @@ router.put(
 );
 
 // 🔹 Borrado lógico de artista (protegido)
-router.delete("/delete/:id_usuario", verifyToken, idArtista, validateInput, eliminar);
+router.delete("/delete/:id_artista", verifyToken, idArtista, validateInput, eliminar);
 
 module.exports = router;

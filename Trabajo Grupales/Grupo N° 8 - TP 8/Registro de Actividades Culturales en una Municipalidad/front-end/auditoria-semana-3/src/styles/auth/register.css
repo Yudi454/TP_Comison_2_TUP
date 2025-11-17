@@ -1,0 +1,45 @@
+/* Registro / MainRegistro styles */
+.registro-row {
+    margin-top: 48px;
+    margin-bottom: 48px;
+}
+
+.registro-card {
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.registro-header {
+    text-align: left;
+    margin-bottom: 18px;
+}
+
+.registro-title {
+    margin: 0;
+    font-size: 1.6rem;
+    font-weight: 600;
+}
+
+.registro-subtitle {
+    margin: 0;
+    margin-top: 6px;
+    color: #6c757d;
+    font-size: 0.95rem;
+}
+
+.registro-footer {
+    background: #f8f9fa;
+    border-top: 1px solid rgba(0, 0, 0, 0.03);
+    padding: 10px 16px;
+}
+
+@media (max-width: 576px) {
+    .registro-card {
+        border-radius: 8px;
+    }
+
+    .registro-title {
+        font-size: 1.25rem;
+    }
+}
+

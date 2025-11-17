@@ -1,0 +1,36 @@
+.lugares-page {
+    padding: 18px;
+}
+
+.lugares-table th,
+.lugares-table td {
+    vertical-align: middle;
+}
+
+.lugares-table td {
+    word-break: break-word;
+}
+
+.lugares-page h3 {
+    margin: 0;
+    font-weight: 600;
+}
+
+/* Modal tweaks */
+.modal-body .form-control {
+    border-radius: 6px;
+}
+
+/* Buttons spacing */
+.lugares-page .btn+.btn {
+    margin-left: 6px;
+}
+
+/* Responsive */
+@media (max-width: 576px) {
+
+    .lugares-table th,
+    .lugares-table td {
+        font-size: 0.9rem;
+    }
+}
